@@ -1,55 +1,35 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useToast } from '@/components/ui/use-toast';
+import { fetchTeamMembersFromSheet, TeamMember } from '@/utils/googleSheetsUtil';
 
 const Team = () => {
   const { t } = useLanguage();
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
-  // Sample team members data
-  const teamMembers = [
-    {
-      name: 'Sofia Rodriguez',
-      role: 'President',
-      country: 'Mexico',
-      bio: 'Ph.D. candidate in Computer Science with a passion for creating inclusive communities.',
-      image: null
-    },
-    {
-      name: 'Carlos Mendoza',
-      role: 'Vice President',
-      country: 'Colombia',
-      bio: 'Studying Mechanical Engineering and working to connect Latin American students across Munich.',
-      image: null
-    },
-    {
-      name: 'Valentina Silva',
-      role: 'Events Coordinator',
-      country: 'Brazil',
-      bio: 'Master\'s student in Business Administration with experience in organizing cultural events.',
-      image: null
-    },
-    {
-      name: 'Gabriel Torres',
-      role: 'Treasurer',
-      country: 'Argentina',
-      bio: 'Economics student with a background in financial management for student organizations.',
-      image: null
-    },
-    {
-      name: 'Luciana Vargas',
-      role: 'Communications Director',
-      country: 'Peru',
-      bio: 'Studying Media Communications and passionate about telling stories that bridge cultures.',
-      image: null
-    },
-    {
-      name: 'Mateo Herrera',
-      role: 'Academic Coordinator',
-      country: 'Chile',
-      bio: 'Ph.D. student in Physics focused on creating support systems for international students.',
-      image: null
-    }
-  ];
+  useEffect(() => {
+    const loadTeamMembers = async () => {
+      try {
+        const members = await fetchTeamMembersFromSheet();
+        setTeamMembers(members);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to load team members:', error);
+        toast({
+          title: "Error loading team data",
+          description: "Please try again later",
+          variant: "destructive",
+        });
+        setLoading(false);
+      }
+    };
+
+    loadTeamMembers();
+  }, [toast]);
 
   return (
     <div className="pt-16">
@@ -71,49 +51,79 @@ const Team = () => {
       <section className="py-16 md:py-24">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-display font-bold mb-6 text-center">
+            <h2 className="text-3xl font-display font-bold mb-6 text-center animate-fade-in-up">
               Leadership Team
             </h2>
-            <p className="text-lg text-gray-700 text-center">
+            <p className="text-lg text-gray-700 text-center animate-fade-in-up" style={{ animationDelay: '100ms' }}>
               Our diverse team brings together perspectives from across Latin America to create an inclusive and vibrant community.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <div 
-                key={index} 
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="h-64 bg-latum-blue/80 flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-white flex items-center justify-center text-latum-blue text-xl font-bold">
-                    {member.name.split(' ').map(n => n[0]).join('')}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <div key={index} className="bg-white rounded-xl overflow-hidden shadow-md">
+                  <Skeleton className="h-64 w-full" />
+                  <div className="p-6">
+                    <Skeleton className="h-4 w-1/4 mb-2" />
+                    <Skeleton className="h-6 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-1/2 mb-4" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-2/3" />
                   </div>
                 </div>
-                <div className="p-6">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="text-sm font-medium px-2 py-1 bg-latum-secondary rounded-full">
-                      {member.country}
-                    </span>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {teamMembers.map((member, index) => (
+                <div 
+                  key={index} 
+                  className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 150}ms` }}
+                >
+                  <div className="h-64 bg-latum-blue/80 flex items-center justify-center overflow-hidden relative group">
+                    {member.image ? (
+                      <img 
+                        src={member.image} 
+                        alt={member.name} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className="w-24 h-24 rounded-full bg-white flex items-center justify-center text-latum-blue text-xl font-bold transform transition-transform duration-500 group-hover:scale-110">
+                        {member.name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                    )}
                   </div>
-                  <h3 className="text-xl font-display font-bold">{member.name}</h3>
-                  <p className="text-latum-blue font-medium mb-3">{member.role}</p>
-                  <p className="text-gray-600">
-                    {member.bio}
-                  </p>
+                  <div className="p-6">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <span className="text-sm font-medium px-2 py-1 bg-latum-secondary rounded-full">
+                        {member.country}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-display font-bold">{member.name}</h3>
+                    <p className="text-latum-blue font-medium mb-3">{member.role}</p>
+                    <p className="text-gray-600">
+                      {member.bio}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
           
           {/* Join the Team CTA */}
           <div className="mt-20 bg-gray-50 rounded-xl p-8 md:p-12 text-center">
-            <h3 className="text-2xl font-display font-bold mb-4">Want to Join Our Team?</h3>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-6">
+            <h3 className="text-2xl font-display font-bold mb-4 animate-fade-in-up">Want to Join Our Team?</h3>
+            <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
               We're always looking for passionate individuals to help grow our community and create impactful events.
             </p>
-            <a href="/contact" className="btn-primary">
+            <a 
+              href="/contact" 
+              className="btn-primary inline-block transform transition duration-300 hover:scale-105 animate-fade-in-up" 
+              style={{ animationDelay: '200ms' }}
+            >
               Get in Touch
             </a>
           </div>
@@ -123,11 +133,15 @@ const Team = () => {
       {/* Volunteers Section */}
       <section className="py-16 bg-latum-blue/10">
         <div className="container-custom text-center">
-          <h2 className="text-3xl font-display font-bold mb-6">Our Volunteers</h2>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-8">
+          <h2 className="text-3xl font-display font-bold mb-6 animate-fade-in-up">Our Volunteers</h2>
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
             LATUM e.V. is powered by dedicated volunteers who contribute their time and talents to creating a vibrant Latin American community at TUM.
           </p>
-          <a href="/contact" className="btn-outline">
+          <a 
+            href="/contact" 
+            className="btn-outline inline-block transform transition duration-300 hover:scale-105 animate-fade-in-up" 
+            style={{ animationDelay: '200ms' }}
+          >
             Become a Volunteer
           </a>
         </div>
