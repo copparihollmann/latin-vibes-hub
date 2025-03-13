@@ -121,51 +121,42 @@ const InstagramFeed = ({ limit, startIndex = 0 }: InstagramFeedProps) => {
 
   if (loading) {
     return (
-      <div className={`${!startIndex ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" : ""}`}>
-        {Array.from({ length: limit || 1 }).map((_, index) => (
-          <div key={index} className="rounded-lg overflow-hidden">
-            <Skeleton className="h-80 w-full" />
-            <div className="p-4">
-              <Skeleton className="h-4 w-3/4 mb-2" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-2/3 mt-2" />
-            </div>
+      <div className="w-full">
+        <div className="rounded-lg overflow-hidden">
+          <Skeleton className="h-72 w-full" />
+          <div className="p-4">
+            <Skeleton className="h-4 w-3/4 mb-2" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-2/3 mt-2" />
           </div>
-        ))}
+        </div>
       </div>
     );
   }
 
-  const gridCols = !startIndex 
-    ? (limit === 3 ? "grid-cols-1 md:grid-cols-3" : 
-       limit === 2 ? "grid-cols-1 md:grid-cols-2" : 
-       "grid-cols-1 md:grid-cols-2 lg:grid-cols-4")
-    : "";
-
   return (
-    <div className={gridCols ? `grid ${gridCols} gap-6` : ""}>
-      {posts.map((post, index) => (
+    <div className="w-full">
+      {posts.map((post) => (
         <a 
           key={post.id}
           href={post.permalink}
           target="_blank"
           rel="noopener noreferrer"
-          className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up"
-          style={{ animationDelay: `${index * 150}ms` }}
+          className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full"
         >
-          <div className="relative h-80 overflow-hidden">
+          <div className="relative aspect-square overflow-hidden">
             <img 
               src={post.media_url} 
               alt="Instagram post" 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
               <div className="p-4 text-white">
                 <p className="text-sm">{new Date(post.timestamp).toLocaleDateString()}</p>
               </div>
             </div>
           </div>
-          <div className="p-4">
+          <div className="p-4 flex-grow">
             <p className="text-gray-700 line-clamp-3 text-sm">{post.caption}</p>
           </div>
         </a>

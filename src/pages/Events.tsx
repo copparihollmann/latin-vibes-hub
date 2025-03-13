@@ -47,29 +47,25 @@ const Events = () => {
             </a>
           </div>
           
-          <div className="relative">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                    <div className="h-full">
-                      <InstagramFeed limit={1} startIndex={index} />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <div className="flex justify-center mt-8">
-                <CarouselPrevious className="relative static mx-2" />
-                <CarouselNext className="relative static mx-2" />
-              </div>
-            </Carousel>
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-mx-2 md:-mx-4">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <CarouselItem key={index} className="px-2 md:px-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                  <InstagramFeed limit={1} startIndex={index} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-8 gap-4">
+              <CarouselPrevious className="static mx-0" />
+              <CarouselNext className="static mx-0" />
+            </div>
+          </Carousel>
         </div>
       </section>
       
@@ -89,29 +85,25 @@ const Events = () => {
             </a>
           </div>
           
-          <div className="relative">
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
-                    <div className="h-full">
-                      <LinkedInPosts limit={1} startIndex={index} />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <div className="flex justify-center mt-8">
-                <CarouselPrevious className="relative static mx-2" />
-                <CarouselNext className="relative static mx-2" />
-              </div>
-            </Carousel>
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-mx-2 md:-mx-4">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <CarouselItem key={index} className="px-2 md:px-4 md:basis-1/2 lg:basis-1/3">
+                  <LinkedInPosts limit={1} startIndex={index} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-8 gap-4">
+              <CarouselPrevious className="static mx-0" />
+              <CarouselNext className="static mx-0" />
+            </div>
+          </Carousel>
         </div>
       </section>
       

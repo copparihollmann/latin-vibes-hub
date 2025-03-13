@@ -108,40 +108,33 @@ const LinkedInPosts = ({ limit, startIndex = 0 }: LinkedInPostsProps) => {
 
   if (loading) {
     return (
-      <div className={!startIndex ? `grid grid-cols-1 md:grid-cols-${limit === 2 ? '2' : '3'} gap-6` : ""}>
-        {Array.from({ length: limit || 1 }).map((_, index) => (
-          <div key={index} className="rounded-lg overflow-hidden bg-white p-6">
-            <Skeleton className="h-6 w-3/4 mb-4" />
-            <Skeleton className="h-4 w-full mb-2" />
-            <Skeleton className="h-4 w-full mb-2" />
-            <Skeleton className="h-4 w-2/3 mb-4" />
-            <div className="flex items-center gap-4 mt-4">
-              <Skeleton className="h-4 w-24" />
-              <Skeleton className="h-4 w-24" />
-            </div>
+      <div className="w-full">
+        <div className="rounded-lg overflow-hidden bg-white p-6">
+          <Skeleton className="h-6 w-3/4 mb-4" />
+          <Skeleton className="h-4 w-full mb-2" />
+          <Skeleton className="h-4 w-full mb-2" />
+          <Skeleton className="h-4 w-2/3 mb-4" />
+          <div className="flex items-center gap-4 mt-4">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-24" />
           </div>
-        ))}
+        </div>
       </div>
     );
   }
 
-  const gridCols = !startIndex 
-    ? (limit === 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 md:grid-cols-3") 
-    : "";
-
   return (
-    <div className={gridCols ? `grid ${gridCols} gap-6` : ""}>
-      {posts.map((post, index) => (
+    <div className="w-full">
+      {posts.map((post) => (
         <a 
           key={post.id}
           href={post.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group bg-white rounded-lg shadow-md hover:shadow-lg p-6 transition-all duration-500 transform hover:-translate-y-2 animate-fade-in-up h-full"
-          style={{ animationDelay: `${index * 150}ms` }}
+          className="group bg-white rounded-lg shadow-md hover:shadow-lg p-6 transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full"
         >
           <h3 className="text-xl font-display font-bold mb-3 group-hover:text-latum-blue transition-colors duration-300">{post.title}</h3>
-          <p className="text-gray-700 mb-4">{post.summary}</p>
+          <p className="text-gray-700 mb-4 flex-grow">{post.summary}</p>
           
           <div className="flex items-center justify-between mt-4 text-sm text-gray-500">
             <div className="flex items-center">
