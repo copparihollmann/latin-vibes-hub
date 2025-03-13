@@ -1,10 +1,12 @@
 
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
 
 type LanguageContextType = {
   language: 'en' | 'es';
   setLanguage: (lang: 'en' | 'es') => void;
   t: (key: string) => string;
+  isTranslatablePage: boolean;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -19,6 +21,7 @@ const translations = {
     'nav.faq': 'FAQ',
     'nav.blog': 'Blog',
     'nav.contact': 'Contact',
+    'nav.alumni': 'Alumni',
     
     // Home Page
     'home.hero.title': 'Latin Americans at TUM',
@@ -30,6 +33,14 @@ const translations = {
     // About 
     'about.title': 'About LATUM',
     'about.description': 'A non-profit student initiative for Latin American students and people interested in Latin American culture',
+    'about.founders.title': 'The Vision Behind LATUM',
+    'about.founders.description': 'Our four co-founders established LATUM in 2023 with the goal of creating a supportive community for Latin American students and promoting cultural exchange at TUM.',
+    
+    // FAQ
+    'faq.title': 'Frequently Asked Questions',
+    'faq.description': 'Find answers to common questions about LATUM e.V.',
+    'faq.more_questions': 'Still have questions?',
+    'faq.contact_us': 'Contact Us',
     
     // Contact
     'contact.title': 'Get in Touch',
@@ -52,6 +63,7 @@ const translations = {
     'nav.faq': 'Preguntas',
     'nav.blog': 'Blog',
     'nav.contact': 'Contacto',
+    'nav.alumni': 'Exalumnos',
     
     // Home Page
     'home.hero.title': 'Latinoamericanos en TUM',
@@ -63,6 +75,14 @@ const translations = {
     // About
     'about.title': 'Sobre LATUM',
     'about.description': 'Una iniciativa estudiantil sin fines de lucro para estudiantes latinoamericanos y personas interesadas en la cultura latinoamericana',
+    'about.founders.title': 'La Visión Detrás de LATUM',
+    'about.founders.description': 'Nuestros cuatro co-fundadores establecieron LATUM en 2023 con el objetivo de crear una comunidad de apoyo para estudiantes latinoamericanos y promover el intercambio cultural en TUM.',
+    
+    // FAQ
+    'faq.title': 'Preguntas Frecuentes',
+    'faq.description': 'Encuentra respuestas a preguntas comunes sobre LATUM e.V.',
+    'faq.more_questions': '¿Todavía tienes preguntas?',
+    'faq.contact_us': 'Contáctanos',
     
     // Contact
     'contact.title': 'Contáctanos',
@@ -79,15 +99,22 @@ const translations = {
   }
 };
 
+// List of pages that should be translatable
+const translatablePages = ['/', '/about', '/faq'];
+
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<'en' | 'es'>('en');
+  const location = useLocation();
+  
+  // Check if current page should be translatable
+  const isTranslatablePage = translatablePages.includes(location.pathname);
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations[typeof language]] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, isTranslatablePage }}>
       {children}
     </LanguageContext.Provider>
   );

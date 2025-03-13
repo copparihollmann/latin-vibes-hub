@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Team from "./pages/Team";
+import Alumni from "./pages/Alumni";
 import Events from "./pages/Events";
 import FAQ from "./pages/FAQ";
 import Blog from "./pages/Blog";
@@ -32,6 +33,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/team" element={<Team />} />
+                <Route path="/alumni" element={<Alumni />} />
                 <Route path="/events" element={<Events />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/blog" element={<Blog />} />

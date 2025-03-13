@@ -4,11 +4,16 @@ import { useLanguage } from '@/context/LanguageContext';
 import { Globe } from 'lucide-react';
 
 const LanguageToggle: React.FC = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, isTranslatablePage } = useLanguage();
 
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'es' : 'en');
   };
+
+  // Don't render anything if the current page isn't translatable
+  if (!isTranslatablePage) {
+    return null;
+  }
 
   return (
     <button 

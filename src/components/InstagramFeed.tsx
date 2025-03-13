@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 interface InstagramPost {
   id: string;
@@ -11,7 +11,11 @@ interface InstagramPost {
   timestamp: string;
 }
 
-const InstagramFeed = () => {
+interface InstagramFeedProps {
+  limit?: number;
+}
+
+const InstagramFeed = ({ limit }: InstagramFeedProps) => {
   const [posts, setPosts] = useState<InstagramPost[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -54,7 +58,9 @@ const InstagramFeed = () => {
             }
           ];
           
-          setPosts(dummyPosts);
+          // Apply limit if provided
+          const limitedPosts = limit ? dummyPosts.slice(0, limit) : dummyPosts;
+          setPosts(limitedPosts);
           setLoading(false);
         }, 1500);
 
@@ -73,12 +79,12 @@ const InstagramFeed = () => {
     };
 
     fetchInstagramPosts();
-  }, [toast]);
+  }, [toast, limit]);
 
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {Array.from({ length: 4 }).map((_, index) => (
+        {Array.from({ length: limit || 4 }).map((_, index) => (
           <div key={index} className="rounded-lg overflow-hidden">
             <Skeleton className="h-80 w-full" />
             <div className="p-4">
@@ -92,8 +98,12 @@ const InstagramFeed = () => {
     );
   }
 
+  const gridCols = limit === 3 ? "grid-cols-1 md:grid-cols-3" : 
+                 limit === 2 ? "grid-cols-1 md:grid-cols-2" : 
+                 "grid-cols-1 md:grid-cols-2 lg:grid-cols-4";
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className={`grid ${gridCols} gap-6`}>
       {posts.map((post, index) => (
         <a 
           key={post.id}

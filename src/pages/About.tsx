@@ -59,6 +59,31 @@ const About = () => {
                 </p>
               </div>
               
+              {/* Co-founders Section */}
+              <div className="space-y-6">
+                <h2 className="text-3xl font-display font-bold">Our Co-founders</h2>
+                <div className="bg-gray-50 rounded-xl p-8 animate-fade-in-up">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                      <div className="aspect-video bg-latum-blue/20 rounded-lg overflow-hidden">
+                        <div className="w-full h-full flex items-center justify-center text-latum-blue">
+                          <span className="text-lg font-medium">Co-founders Image</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <h3 className="text-xl font-display font-bold">{t('about.founders.title')}</h3>
+                      <p className="text-gray-700">
+                        {t('about.founders.description')}
+                      </p>
+                      <p className="text-gray-700 italic">
+                        "Our vision was to create a space where Latin American students could find community, support and a sense of belonging while studying abroad at TUM."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
               <div className="space-y-6">
                 <h2 className="text-3xl font-display font-bold">What We Do</h2>
                 <p className="text-lg text-gray-700">

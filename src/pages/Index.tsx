@@ -3,6 +3,9 @@ import React, { useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import HeroSection from '@/components/HeroSection';
 import { useToast } from '@/hooks/use-toast';
+import InstagramFeed from '@/components/InstagramFeed';
+import LinkedInPosts from '@/components/LinkedInPosts';
+import { Instagram, Linkedin } from 'lucide-react';
 
 const Index = () => {
   const { t } = useLanguage();
@@ -60,8 +63,53 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Events Preview Section */}
+      {/* Social Media Feed Section */}
       <section className="section-padding bg-gray-50">
+        <div className="container-custom">
+          {/* Instagram Feed */}
+          <div className="mb-16">
+            <div className="flex flex-col md:flex-row items-center justify-between mb-8">
+              <h2 className="text-3xl font-display font-bold">Latest Instagram Posts</h2>
+              <a 
+                href="https://www.instagram.com/latum_ev/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-latum-blue font-medium transition-all duration-300 hover:opacity-80 mt-4 md:mt-0"
+              >
+                <Instagram size={20} />
+                <span>Follow us on Instagram</span>
+              </a>
+            </div>
+            
+            {/* Show only 3 latest Instagram posts */}
+            <div className="instagram-feed-container">
+              <InstagramFeed limit={3} />
+            </div>
+          </div>
+          
+          {/* LinkedIn Posts */}
+          <div>
+            <div className="flex flex-col md:flex-row items-center justify-between mb-8">
+              <h2 className="text-3xl font-display font-bold">Latest Activities</h2>
+              <a 
+                href="https://www.linkedin.com/company/latum-ev/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-latum-blue font-medium transition-all duration-300 hover:opacity-80 mt-4 md:mt-0"
+              >
+                <Linkedin size={20} />
+                <span>Connect on LinkedIn</span>
+              </a>
+            </div>
+            
+            {/* Show only 2 latest LinkedIn posts */}
+            <LinkedInPosts limit={2} />
+          </div>
+        </div>
+      </section>
+      
+      {/* Events Preview Section */}
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl font-display font-bold mb-6">Upcoming Events</h2>

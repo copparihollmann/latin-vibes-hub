@@ -12,7 +12,11 @@ interface LinkedInPost {
   publishedDate: string;
 }
 
-const LinkedInPosts = () => {
+interface LinkedInPostsProps {
+  limit?: number;
+}
+
+const LinkedInPosts = ({ limit }: LinkedInPostsProps) => {
   const [posts, setPosts] = useState<LinkedInPost[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -48,7 +52,9 @@ const LinkedInPosts = () => {
             }
           ];
           
-          setPosts(dummyPosts);
+          // Apply limit if provided
+          const limitedPosts = limit ? dummyPosts.slice(0, limit) : dummyPosts;
+          setPosts(limitedPosts);
           setLoading(false);
         }, 1500);
 
@@ -67,12 +73,12 @@ const LinkedInPosts = () => {
     };
 
     fetchLinkedInPosts();
-  }, [toast]);
+  }, [toast, limit]);
 
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {Array.from({ length: 3 }).map((_, index) => (
+        {Array.from({ length: limit || 3 }).map((_, index) => (
           <div key={index} className="rounded-lg overflow-hidden bg-white p-6">
             <Skeleton className="h-6 w-3/4 mb-4" />
             <Skeleton className="h-4 w-full mb-2" />
@@ -88,8 +94,10 @@ const LinkedInPosts = () => {
     );
   }
 
+  const gridCols = limit === 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 md:grid-cols-3";
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className={`grid ${gridCols} gap-6`}>
       {posts.map((post, index) => (
         <a 
           key={post.id}

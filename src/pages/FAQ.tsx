@@ -76,10 +76,10 @@ const FAQ = () => {
         <div className="container-custom">
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 animate-fade-in">
-              Frequently Asked Questions
+              {t('faq.title')}
             </h1>
             <p className="text-xl md:text-2xl animate-fade-in" style={{ animationDelay: '100ms' }}>
-              Find answers to common questions about LATUM e.V.
+              {t('faq.description')}
             </p>
           </div>
         </div>
@@ -119,12 +119,12 @@ const FAQ = () => {
           
           {/* Contact CTA */}
           <div className="mt-16 text-center p-8 bg-gray-50 rounded-xl">
-            <h3 className="text-2xl font-display font-bold mb-4">Still have questions?</h3>
+            <h3 className="text-2xl font-display font-bold mb-4">{t('faq.more_questions')}</h3>
             <p className="text-gray-700 mb-6">
               If you couldn't find the information you were looking for, please don't hesitate to reach out to us directly.
             </p>
             <a href="/contact" className="btn-primary">
-              Contact Us
+              {t('faq.contact_us')}
             </a>
           </div>
         </div>

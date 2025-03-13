@@ -15,6 +15,13 @@ export interface TeamMember {
   image: string | null;
 }
 
+export interface AlumniMember {
+  name: string;
+  position: string;
+  year: string;
+  image: string | null;
+}
+
 export const fetchTeamMembersFromSheet = async (): Promise<TeamMember[]> => {
   try {
     // In a real implementation, you would call the Google Sheets API here
@@ -64,6 +71,20 @@ export const fetchTeamMembersFromSheet = async (): Promise<TeamMember[]> => {
             country: 'Chile',
             bio: 'Ph.D. student in Physics focused on creating support systems for international students.',
             image: null
+          },
+          {
+            name: 'Isabella Ortiz',
+            role: 'Cultural Affairs Director',
+            country: 'Ecuador',
+            bio: 'Anthropology student specializing in Latin American traditions and cultural exchange programs.',
+            image: null
+          },
+          {
+            name: 'Diego Morales',
+            role: 'Social Media Manager',
+            country: 'Costa Rica',
+            bio: 'Digital Media student with expertise in content creation and community engagement strategies.',
+            image: null
           }
         ];
         resolve(dummyTeamMembers);
@@ -75,10 +96,66 @@ export const fetchTeamMembersFromSheet = async (): Promise<TeamMember[]> => {
   }
 };
 
+export const fetchAlumniFromSheet = async (): Promise<AlumniMember[]> => {
+  try {
+    // In a real implementation, you would call the Google Sheets API here
+    // For now, we'll return dummy data with a simulated delay to mimic API call
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        // This is placeholder data - in a real app you'd fetch from Google Sheets
+        const dummyAlumni: AlumniMember[] = [
+          {
+            name: 'Miguel Sanchez',
+            position: 'Former President',
+            year: '2023',
+            image: null
+          },
+          {
+            name: 'Ana Cabrera',
+            position: 'Former Vice President',
+            year: '2023',
+            image: null
+          },
+          {
+            name: 'Rafael Jimenez',
+            position: 'Former Treasurer',
+            year: '2023',
+            image: null
+          },
+          {
+            name: 'Lucia Rodriguez',
+            position: 'Former Events Coordinator',
+            year: '2023',
+            image: null
+          },
+          {
+            name: 'Pablo Navarro',
+            position: 'Former Communications Director',
+            year: '2023',
+            image: null
+          },
+          {
+            name: 'Camila Reyes',
+            position: 'Former Academic Coordinator',
+            year: '2023',
+            image: null
+          }
+        ];
+        resolve(dummyAlumni);
+      }, 1000);
+    });
+  } catch (error) {
+    console.error('Error fetching alumni from Google Sheets:', error);
+    throw error;
+  }
+};
+
 /**
  * Instructions for connecting to real Google Sheets:
  * 
- * 1. Create a Google Sheet with columns for: name, role, country, bio, image
+ * 1. Create a Google Sheet with separate sheets for:
+ *    - Team members: columns for name, role, country, bio, image
+ *    - Alumni: columns for name, position, year, image
  * 2. Make the sheet public or share it with appropriate permissions
  * 3. Set up a Google Cloud project and enable the Google Sheets API
  * 4. Create an API key or service account credentials
@@ -89,10 +166,12 @@ export const fetchTeamMembersFromSheet = async (): Promise<TeamMember[]> => {
  * 
  * const SHEET_ID = 'your-google-sheet-id';
  * const API_KEY = 'your-api-key'; // Better to keep in server-side environment variable
- * const RANGE = 'Sheet1!A2:E20'; // Adjust as needed
+ * const TEAM_RANGE = 'TeamMembers!A2:E20'; // Adjust as needed
+ * const ALUMNI_RANGE = 'Alumni!A2:D20'; // Adjust as needed
  * 
+ * // For team members
  * const response = await fetch(
- *   `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
+ *   `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${TEAM_RANGE}?key=${API_KEY}`
  * );
  * const data = await response.json();
  * 
@@ -103,5 +182,18 @@ export const fetchTeamMembersFromSheet = async (): Promise<TeamMember[]> => {
  *   country: row[2],
  *   bio: row[3],
  *   image: row[4] || null
+ * }));
+ * 
+ * // Similar process for alumni
+ * const alumniResponse = await fetch(
+ *   `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${ALUMNI_RANGE}?key=${API_KEY}`
+ * );
+ * const alumniData = await alumniResponse.json();
+ * 
+ * const alumni = alumniData.values.map(row => ({
+ *   name: row[0],
+ *   position: row[1],
+ *   year: row[2],
+ *   image: row[3] || null
  * }));
  */
