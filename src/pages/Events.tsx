@@ -47,7 +47,7 @@ const Events = () => {
             </a>
           </div>
           
-          <div className="relative px-12">
+          <div className="relative">
             <Carousel
               opts={{
                 align: "start",
@@ -55,17 +55,19 @@ const Events = () => {
               }}
               className="w-full"
             >
-              <CarouselContent>
+              <CarouselContent className="-ml-2 md:-ml-4">
                 {Array.from({ length: 8 }).map((_, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                    <div className="p-1">
+                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                    <div className="h-full">
                       <InstagramFeed limit={1} startIndex={index} />
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="absolute left-0 top-1/2" />
-              <CarouselNext className="absolute right-0 top-1/2" />
+              <div className="flex justify-center mt-8">
+                <CarouselPrevious className="relative static mx-2" />
+                <CarouselNext className="relative static mx-2" />
+              </div>
             </Carousel>
           </div>
         </div>
@@ -87,7 +89,7 @@ const Events = () => {
             </a>
           </div>
           
-          <div className="relative px-12">
+          <div className="relative">
             <Carousel
               opts={{
                 align: "start",
@@ -95,17 +97,19 @@ const Events = () => {
               }}
               className="w-full"
             >
-              <CarouselContent>
+              <CarouselContent className="-ml-2 md:-ml-4">
                 {Array.from({ length: 6 }).map((_, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-1">
+                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <div className="h-full">
                       <LinkedInPosts limit={1} startIndex={index} />
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="absolute left-0 top-1/2" />
-              <CarouselNext className="absolute right-0 top-1/2" />
+              <div className="flex justify-center mt-8">
+                <CarouselPrevious className="relative static mx-2" />
+                <CarouselNext className="relative static mx-2" />
+              </div>
             </Carousel>
           </div>
         </div>
