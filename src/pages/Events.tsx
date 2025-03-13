@@ -1,7 +1,14 @@
 
 import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { Calendar, MapPin, Clock, Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin } from 'lucide-react';
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from '@/components/ui/carousel';
 import InstagramFeed from '@/components/InstagramFeed';
 import LinkedInPosts from '@/components/LinkedInPosts';
 
@@ -24,7 +31,7 @@ const Events = () => {
         </div>
       </section>
       
-      {/* Instagram Feed Section */}
+      {/* Instagram Feed Section with Carousel */}
       <section className="py-16 md:py-24">
         <div className="container-custom">
           <div className="flex flex-col md:flex-row items-center justify-between mb-12">
@@ -40,11 +47,31 @@ const Events = () => {
             </a>
           </div>
           
-          <InstagramFeed />
+          <div className="relative px-12">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                    <div className="p-1">
+                      <InstagramFeed limit={1} startIndex={index} />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-0 top-1/2" />
+              <CarouselNext className="absolute right-0 top-1/2" />
+            </Carousel>
+          </div>
         </div>
       </section>
       
-      {/* LinkedIn Posts */}
+      {/* LinkedIn Posts with Carousel */}
       <section className="py-16 bg-gray-50">
         <div className="container-custom">
           <div className="flex flex-col md:flex-row items-center justify-between mb-12">
@@ -60,7 +87,27 @@ const Events = () => {
             </a>
           </div>
           
-          <LinkedInPosts />
+          <div className="relative px-12">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-1">
+                      <LinkedInPosts limit={1} startIndex={index} />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-0 top-1/2" />
+              <CarouselNext className="absolute right-0 top-1/2" />
+            </Carousel>
+          </div>
         </div>
       </section>
       

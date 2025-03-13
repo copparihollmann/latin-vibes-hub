@@ -162,25 +162,28 @@ const HeroSection: React.FC = () => {
         ></div>
       )}
       
-      {/* Scroll Down Indicator */}
-      <motion.button 
-        onClick={scrollToContent}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white"
-        aria-label="Scroll down"
+      {/* Scroll Down Indicator - Centered properly */}
+      <motion.div 
+        className="absolute left-0 right-0 bottom-10 mx-auto flex justify-center items-center"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
       >
-        <div className="flex flex-col items-center">
+        <button 
+          onClick={scrollToContent}
+          className="flex flex-col items-center text-white"
+          aria-label="Scroll down"
+        >
           <span className="text-sm font-medium mb-2 opacity-80">Discover More</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
+            className="flex justify-center"
           >
             <ChevronDown size={28} />
           </motion.div>
-        </div>
-      </motion.button>
+        </button>
+      </motion.div>
     </section>
   );
 };

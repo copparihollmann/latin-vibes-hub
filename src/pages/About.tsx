@@ -20,7 +20,8 @@ const About = () => {
           const rect = element.getBoundingClientRect();
           if (rect.top < viewportHeight * 0.85) {
             element.classList.add('animate-fade-in-up');
-            element.style.animationDelay = `${index * 100}ms`;
+            // Fix TypeScript error by properly casting the element to HTMLElement
+            (element as HTMLElement).style.animationDelay = `${index * 100}ms`;
           }
         });
       }

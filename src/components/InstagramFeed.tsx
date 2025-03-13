@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
@@ -13,9 +12,10 @@ interface InstagramPost {
 
 interface InstagramFeedProps {
   limit?: number;
+  startIndex?: number;
 }
 
-const InstagramFeed = ({ limit }: InstagramFeedProps) => {
+const InstagramFeed = ({ limit, startIndex = 0 }: InstagramFeedProps) => {
   const [posts, setPosts] = useState<InstagramPost[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -55,14 +55,52 @@ const InstagramFeed = ({ limit }: InstagramFeedProps) => {
               media_url: 'https://via.placeholder.com/500x500/0078B3/FFFFFF?text=Film+Festival',
               caption: 'Latin American Film Festival coming next month! Stay tuned for the full program. #FilmFestival #LatinCinema',
               timestamp: '2023-05-15T14:00:00+0000'
+            },
+            {
+              id: '5',
+              permalink: 'https://www.instagram.com/p/placeholder5/',
+              media_url: 'https://via.placeholder.com/500x500/0078B3/FFFFFF?text=Networking+Event',
+              caption: 'Networking night with Latin American professionals in Munich. Great conversations and connections! #Networking #LatinAmericans',
+              timestamp: '2023-05-10T18:30:00+0000'
+            },
+            {
+              id: '6',
+              permalink: 'https://www.instagram.com/p/placeholder6/',
+              media_url: 'https://via.placeholder.com/500x500/0078B3/FFFFFF?text=Study+Group',
+              caption: 'Our weekly study group is helping many students excel in their courses. Join us every Wednesday! #StudyGroup #AcademicSuccess',
+              timestamp: '2023-05-05T16:00:00+0000'
+            },
+            {
+              id: '7',
+              permalink: 'https://www.instagram.com/p/placeholder7/',
+              media_url: 'https://via.placeholder.com/500x500/0078B3/FFFFFF?text=Cultural+Exchange',
+              caption: 'Cultural exchange day at TUM was a blast! Thanks to all participants for sharing their traditions. #CulturalExchange #Diversity',
+              timestamp: '2023-04-28T14:00:00+0000'
+            },
+            {
+              id: '8',
+              permalink: 'https://www.instagram.com/p/placeholder8/',
+              media_url: 'https://via.placeholder.com/500x500/0078B3/FFFFFF?text=Welcome+Party',
+              caption: 'Welcome party for new Latin American students at TUM. So happy to see our community growing! #WelcomeParty #NewStudents',
+              timestamp: '2023-04-20T20:00:00+0000'
             }
           ];
           
-          // Apply limit if provided
-          const limitedPosts = limit ? dummyPosts.slice(0, limit) : dummyPosts;
-          setPosts(limitedPosts);
+          // Apply startIndex and limit if provided
+          let selectedPosts = [...dummyPosts];
+          
+          // If used in a carousel, we select based on startIndex
+          if (startIndex > 0) {
+            selectedPosts = [dummyPosts[startIndex % dummyPosts.length]];
+          } 
+          // Otherwise apply the regular limit
+          else if (limit) {
+            selectedPosts = dummyPosts.slice(0, limit);
+          }
+          
+          setPosts(selectedPosts);
           setLoading(false);
-        }, 1500);
+        }, 800);
 
         // In production, you would implement Instagram Graph API
         // Note: For actual implementation, you'd need a server or edge function
@@ -79,12 +117,12 @@ const InstagramFeed = ({ limit }: InstagramFeedProps) => {
     };
 
     fetchInstagramPosts();
-  }, [toast, limit]);
+  }, [toast, limit, startIndex]);
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {Array.from({ length: limit || 4 }).map((_, index) => (
+      <div className={`${!startIndex ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" : ""}`}>
+        {Array.from({ length: limit || 1 }).map((_, index) => (
           <div key={index} className="rounded-lg overflow-hidden">
             <Skeleton className="h-80 w-full" />
             <div className="p-4">
@@ -98,12 +136,14 @@ const InstagramFeed = ({ limit }: InstagramFeedProps) => {
     );
   }
 
-  const gridCols = limit === 3 ? "grid-cols-1 md:grid-cols-3" : 
-                 limit === 2 ? "grid-cols-1 md:grid-cols-2" : 
-                 "grid-cols-1 md:grid-cols-2 lg:grid-cols-4";
+  const gridCols = !startIndex 
+    ? (limit === 3 ? "grid-cols-1 md:grid-cols-3" : 
+       limit === 2 ? "grid-cols-1 md:grid-cols-2" : 
+       "grid-cols-1 md:grid-cols-2 lg:grid-cols-4")
+    : "";
 
   return (
-    <div className={`grid ${gridCols} gap-6`}>
+    <div className={gridCols ? `grid ${gridCols} gap-6` : ""}>
       {posts.map((post, index) => (
         <a 
           key={post.id}
