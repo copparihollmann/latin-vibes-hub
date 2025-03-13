@@ -1,11 +1,14 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const HeroSection: React.FC = () => {
   const { t } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
 
   // Parallax effect on scroll
   useEffect(() => {
@@ -24,6 +27,24 @@ const HeroSection: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Mouse move effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroRef.current) {
+        const { clientX, clientY } = e;
+        const { left, top, width, height } = heroRef.current.getBoundingClientRect();
+        
+        const x = (clientX - left) / width;
+        const y = (clientY - top) / height;
+        
+        setMousePosition({ x, y });
+      }
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   const scrollToContent = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -31,48 +52,135 @@ const HeroSection: React.FC = () => {
     });
   };
 
+  // Animation variants for framer-motion
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Color */}
-      <div className="absolute inset-0 bg-latum-blue"></div>
+      {/* Background Layer */}
+      <div className="absolute inset-0 bg-gradient-to-br from-latum-blue via-latum-blue to-latum-blue/80"></div>
       
-      {/* Dot Pattern Overlay */}
-      <div className="absolute inset-0 dot-pattern opacity-10"></div>
+      {/* Animated Background Elements */}
+      <div 
+        className="absolute inset-0 dot-pattern opacity-10"
+        style={{
+          transform: `translate(${(mousePosition.x - 0.5) * -10}px, ${(mousePosition.y - 0.5) * -10}px)`
+        }}
+      ></div>
+      
+      {/* Gradient Orbs */}
+      <div 
+        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-latum-accent/20 filter blur-3xl"
+        style={{ 
+          transform: `translate(${(mousePosition.x - 0.5) * -30}px, ${(mousePosition.y - 0.5) * -30}px)`,
+          opacity: 0.4
+        }}
+      ></div>
+      <div 
+        className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-white/10 filter blur-3xl"
+        style={{ 
+          transform: `translate(${(mousePosition.x - 0.5) * 20}px, ${(mousePosition.y - 0.5) * 20}px)`,
+          opacity: 0.3
+        }}
+      ></div>
       
       {/* Hero Content */}
-      <div 
+      <motion.div 
         ref={heroRef}
         className="container-custom relative z-10 text-white space-y-6 mt-16"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 mb-4 bg-white/10 backdrop-blur-sm rounded-full">
+          <motion.div 
+            variants={itemVariants}
+            className="inline-block px-4 py-1 mb-4 bg-white/10 backdrop-blur-sm rounded-full"
+          >
             <span className="text-sm font-accent font-medium">Est. 2023</span>
-          </div>
+          </motion.div>
           
-          <h1 className="text-5xl md:text-7xl font-display font-bold mb-6 leading-tight">
+          <motion.h1 
+            variants={itemVariants}
+            className="text-5xl md:text-7xl font-display font-bold mb-6 leading-tight"
+          >
             {t('home.hero.title')}
-          </h1>
+          </motion.h1>
           
-          <p className="text-xl md:text-2xl font-light max-w-3xl mx-auto">
+          <motion.p 
+            variants={itemVariants}
+            className="text-xl md:text-2xl font-light max-w-3xl mx-auto"
+          >
             {t('home.hero.subtitle')}
-          </p>
+          </motion.p>
           
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#mission" className="btn-primary">
-              {t('home.hero.cta')}
+          <motion.div 
+            variants={itemVariants}
+            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a 
+              href="#mission" 
+              className="relative overflow-hidden group inline-block"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+            >
+              <span className="btn-primary inline-block relative z-10">
+                {t('home.hero.cta')}
+              </span>
+              <span className="absolute inset-0 bg-latum-accent scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
             </a>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
+      
+      {/* Spotlight Effect */}
+      {isHovering && (
+        <div 
+          className="spotlight" 
+          style={{
+            left: `${mousePosition.x * 100}%`,
+            top: `${mousePosition.y * 100}%`,
+          }}
+        ></div>
+      )}
       
       {/* Scroll Down Indicator */}
-      <button 
+      <motion.button 
         onClick={scrollToContent}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce"
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white"
         aria-label="Scroll down"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 0.5 }}
       >
-        <ChevronDown size={32} />
-      </button>
+        <div className="flex flex-col items-center">
+          <span className="text-sm font-medium mb-2 opacity-80">Discover More</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+          >
+            <ChevronDown size={28} />
+          </motion.div>
+        </div>
+      </motion.button>
     </section>
   );
 };

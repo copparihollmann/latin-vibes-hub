@@ -74,18 +74,35 @@
     @apply border-border;
   }
 
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
-    @apply bg-white text-foreground font-sans;
+    @apply bg-white text-foreground font-sans antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
+  
+  /* Improved scrollbar styling */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-latum-blue/60 rounded-full hover:bg-latum-blue/80 transition-colors duration-300;
+  }
 }
 
 @layer components {
   .nav-link {
-    @apply relative px-3 py-2 text-lg font-accent font-medium transition-colors duration-300 hover:text-latum-blue;
+    @apply relative px-3 py-2 text-lg font-accent font-medium transition-all duration-300 hover:text-latum-blue;
   }
   
   .nav-link::after {
@@ -106,11 +123,11 @@
   }
 
   .btn-primary {
-    @apply bg-latum-blue text-white px-6 py-3 rounded-md hover:bg-opacity-90 transition-all duration-300 font-accent font-medium;
+    @apply bg-latum-blue text-white px-6 py-3 rounded-md hover:bg-opacity-90 transition-all duration-300 font-accent font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .btn-outline {
-    @apply border-2 border-latum-blue text-latum-blue px-6 py-2.5 rounded-md hover:bg-latum-blue hover:text-white transition-all duration-300 font-accent font-medium;
+    @apply border-2 border-latum-blue text-latum-blue px-6 py-2.5 rounded-md hover:bg-latum-blue hover:text-white transition-all duration-300 font-accent font-medium shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .container-custom {
@@ -122,7 +139,22 @@
   }
 
   .glass-morphism {
-    @apply backdrop-blur-lg bg-white/70 shadow-lg;
+    @apply backdrop-blur-xl bg-white/80 shadow-lg;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  .shimmer {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_1.5s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent;
+  }
+}
+
+/* Enhanced animations */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
   }
 }
 
@@ -146,8 +178,151 @@
   transition: opacity 300ms;
 }
 
-/* Custom Dot Pattern */
+/* Improved Dot Pattern */
 .dot-pattern {
   background-image: radial-gradient(circle, #0078B3 1px, transparent 1px);
   background-size: 20px 20px;
+}
+
+/* New spotlight effect */
+.spotlight {
+  position: absolute;
+  height: 200%;
+  width: 200%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.3s;
+}
+
+/* Animated underline for headings */
+.title-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.title-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #0078B3, rgba(0, 120, 179, 0.3), #0078B3);
+  background-size: 200% 100%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* New animation classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.6s ease forwards;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.6s ease forwards;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.6s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Interactive image hover effects */
+.hover-zoom {
+  transition: transform 0.3s ease;
+}
+
+.hover-zoom:hover {
+  transform: scale(1.05);
+}
+
+/* Enhanced button hover effects */
+.btn-hover-slide::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: width 0.3s ease;
+}
+
+.btn-hover-slide:hover::after {
+  width: 100%;
 }

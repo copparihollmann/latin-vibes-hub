@@ -20,12 +20,12 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-grow pt-20">
@@ -43,10 +43,10 @@ const App = () => (
             </main>
             <Footer />
           </div>
-        </BrowserRouter>
-      </TooltipProvider>
-    </LanguageProvider>
-  </QueryClientProvider>
+        </TooltipProvider>
+      </LanguageProvider>
+    </QueryClientProvider>
+  </BrowserRouter>
 );
 
 export default App;
