@@ -5,7 +5,7 @@ import HeroSection from '@/components/HeroSection';
 import { useToast } from '@/hooks/use-toast';
 import InstagramFeed from '@/components/InstagramFeed';
 import LinkedInPosts from '@/components/LinkedInPosts';
-import { Instagram, Linkedin, Users, Calendar, MapPin, Mountain, TreePalm, Cactus } from 'lucide-react';
+import { Instagram, Linkedin, Users, Calendar, MapPin, Mountain, TreePalm, Flower, Globe } from 'lucide-react';
 import ParallaxSection, { ParallaxElement } from '@/components/ParallaxSection';
 
 const Index = () => {
@@ -30,7 +30,6 @@ const Index = () => {
       <ParallaxSection 
         className="py-24 bg-gradient-to-b from-white to-blue-50"
         overlayOpacity={0.1}
-        backgroundImage="/lovable-uploads/6c532c0e-cafd-4762-983d-f5ad0b480b4d.png"
       >
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -60,7 +59,7 @@ const Index = () => {
                   {/* Latin American Themed Decorative Elements */}
                   <ParallaxElement speed={-0.05} className="absolute top-10 left-10">
                     <div className="text-white/80">
-                      <Cactus size={48} />
+                      <Flower size={48} />
                     </div>
                   </ParallaxElement>
                   
@@ -77,11 +76,7 @@ const Index = () => {
                   </ParallaxElement>
                   
                   {/* Map silhouette */}
-                  <img 
-                    src="/lovable-uploads/6c532c0e-cafd-4762-983d-f5ad0b480b4d.png" 
-                    alt="Latin America Map" 
-                    className="w-64 h-64 opacity-90"
-                  />
+                  <Globe size={128} className="text-white/80" />
                 </div>
               </div>
               
@@ -98,7 +93,7 @@ const Index = () => {
         {/* Parallax decorative elements */}
         <ParallaxElement speed={-0.15} className="absolute top-20 left-10 w-32 h-32 rounded-full bg-latum-blue/5 opacity-70">
           <div className="w-full h-full flex items-center justify-center text-latum-blue/30">
-            <Cactus size={32} />
+            <Flower size={32} />
           </div>
         </ParallaxElement>
         
@@ -162,7 +157,7 @@ const Index = () => {
       {/* Events Preview Section with Parallax Effect */}
       <section className="relative overflow-hidden py-24 bg-gradient-to-b from-gray-50 to-white">
         <ParallaxElement speed={-0.1} className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-gray-50 to-transparent">
-          {/* Empty div for parallax effect only */}
+          <div className="w-full h-full"></div>
         </ParallaxElement>
         
         <div className="container-custom relative z-10">
@@ -248,7 +243,7 @@ const Index = () => {
       {/* Community Highlight Section with Parallax */}
       <ParallaxSection 
         className="py-24 text-white"
-        backgroundImage="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        backgroundImage="https://images.unsplash.com/photo-1621682372775-533449e550ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         overlayOpacity={0.8}
       >
         <div className="container-custom">
