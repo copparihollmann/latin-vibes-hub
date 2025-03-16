@@ -81,8 +81,8 @@ const Index = () => {
               </a>
             </div>
             
-            {/* Show only 3 latest Instagram posts */}
-            <div className="instagram-feed-container">
+            {/* Instagram feed grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <InstagramFeed limit={3} />
             </div>
           </div>
@@ -102,8 +102,10 @@ const Index = () => {
               </a>
             </div>
             
-            {/* Show only 2 latest LinkedIn posts */}
-            <LinkedInPosts limit={2} />
+            {/* LinkedIn posts grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <LinkedInPosts limit={2} />
+            </div>
           </div>
         </div>
       </section>

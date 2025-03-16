@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
@@ -86,7 +87,6 @@ const InstagramFeed = ({ limit, startIndex = 0 }: InstagramFeedProps) => {
             }
           ];
           
-          // Apply startIndex and limit if provided
           let selectedPosts = [...dummyPosts];
           
           // If used in a carousel, we select based on startIndex
@@ -101,10 +101,6 @@ const InstagramFeed = ({ limit, startIndex = 0 }: InstagramFeedProps) => {
           setPosts(selectedPosts);
           setLoading(false);
         }, 800);
-
-        // In production, you would implement Instagram Graph API
-        // Note: For actual implementation, you'd need a server or edge function
-        // to securely handle Instagram API tokens
       } catch (error) {
         console.error('Error fetching Instagram posts:', error);
         toast({
@@ -120,22 +116,79 @@ const InstagramFeed = ({ limit, startIndex = 0 }: InstagramFeedProps) => {
   }, [toast, limit, startIndex]);
 
   if (loading) {
-    return (
-      <div className="w-full">
-        <div className="rounded-lg overflow-hidden">
-          <Skeleton className="h-72 w-full" />
-          <div className="p-4">
-            <Skeleton className="h-4 w-3/4 mb-2" />
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-2/3 mt-2" />
+    // Show appropriate loading skeletons based on usage context
+    if (startIndex > 0) {
+      // Single post skeleton for carousel
+      return (
+        <div className="w-full h-full">
+          <div className="rounded-lg overflow-hidden h-full">
+            <Skeleton className="h-72 w-full" />
+            <div className="p-4">
+              <Skeleton className="h-4 w-3/4 mb-2" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-2/3 mt-2" />
+            </div>
           </div>
         </div>
-      </div>
+      );
+    }
+    
+    // Multiple posts skeleton for grid layout
+    return (
+      <>
+        {Array.from({ length: limit || 3 }).map((_, i) => (
+          <div key={i} className="w-full">
+            <div className="rounded-lg overflow-hidden">
+              <Skeleton className="h-72 w-full" />
+              <div className="p-4">
+                <Skeleton className="h-4 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-2/3 mt-2" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </>
     );
   }
 
+  // Handle different display modes based on usage context
+  if (startIndex > 0) {
+    // Single post display for carousel
+    return (
+      <>
+        {posts.map((post) => (
+          <a 
+            key={post.id}
+            href={post.permalink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 h-full flex flex-col"
+          >
+            <div className="relative aspect-square overflow-hidden">
+              <img 
+                src={post.media_url} 
+                alt="Instagram post" 
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div className="p-4 text-white">
+                  <p className="text-sm">{new Date(post.timestamp).toLocaleDateString()}</p>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 flex-grow">
+              <p className="text-gray-700 line-clamp-3 text-sm">{post.caption}</p>
+            </div>
+          </a>
+        ))}
+      </>
+    );
+  }
+
+  // Default display for grid layout
   return (
-    <div className="w-full">
+    <>
       {posts.map((post) => (
         <a 
           key={post.id}
@@ -161,7 +214,7 @@ const InstagramFeed = ({ limit, startIndex = 0 }: InstagramFeedProps) => {
           </div>
         </a>
       ))}
-    </div>
+    </>
   );
 };
 

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
@@ -88,10 +89,6 @@ const LinkedInPosts = ({ limit, startIndex = 0 }: LinkedInPostsProps) => {
           setPosts(selectedPosts);
           setLoading(false);
         }, 800);
-
-        // In production, you would implement LinkedIn API
-        // Note: For actual implementation, you'd need a server or edge function
-        // to securely handle LinkedIn API tokens
       } catch (error) {
         console.error('Error fetching LinkedIn posts:', error);
         toast({
@@ -107,24 +104,82 @@ const LinkedInPosts = ({ limit, startIndex = 0 }: LinkedInPostsProps) => {
   }, [toast, limit, startIndex]);
 
   if (loading) {
-    return (
-      <div className="w-full">
-        <div className="rounded-lg overflow-hidden bg-white p-6">
-          <Skeleton className="h-6 w-3/4 mb-4" />
-          <Skeleton className="h-4 w-full mb-2" />
-          <Skeleton className="h-4 w-full mb-2" />
-          <Skeleton className="h-4 w-2/3 mb-4" />
-          <div className="flex items-center gap-4 mt-4">
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-4 w-24" />
+    // Show appropriate loading skeletons based on usage context
+    if (startIndex > 0) {
+      // Single post skeleton for carousel
+      return (
+        <div className="w-full h-full">
+          <div className="rounded-lg overflow-hidden bg-white p-6 h-full">
+            <Skeleton className="h-6 w-3/4 mb-4" />
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-2/3 mb-4" />
+            <div className="flex items-center gap-4 mt-4">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-4 w-24" />
+            </div>
           </div>
         </div>
-      </div>
+      );
+    }
+    
+    // Multiple posts skeleton for grid layout
+    return (
+      <>
+        {Array.from({ length: limit || 2 }).map((_, i) => (
+          <div key={i} className="w-full">
+            <div className="rounded-lg overflow-hidden bg-white p-6">
+              <Skeleton className="h-6 w-3/4 mb-4" />
+              <Skeleton className="h-4 w-full mb-2" />
+              <Skeleton className="h-4 w-full mb-2" />
+              <Skeleton className="h-4 w-2/3 mb-4" />
+              <div className="flex items-center gap-4 mt-4">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </>
     );
   }
 
+  // Handle different display modes based on usage context
+  if (startIndex > 0) {
+    // Single post display for carousel
+    return (
+      <>
+        {posts.map((post) => (
+          <a 
+            key={post.id}
+            href={post.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-white rounded-lg shadow-md hover:shadow-lg p-6 transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full"
+          >
+            <h3 className="text-xl font-display font-bold mb-3 group-hover:text-latum-blue transition-colors duration-300">{post.title}</h3>
+            <p className="text-gray-700 mb-4 flex-grow">{post.summary}</p>
+            
+            <div className="flex items-center justify-between mt-4 text-sm text-gray-500">
+              <div className="flex items-center">
+                <Calendar size={14} className="mr-1" />
+                <span>{new Date(post.publishedDate).toLocaleDateString()}</span>
+              </div>
+              
+              <div className="flex items-center text-latum-blue">
+                <span className="mr-1">Read more</span>
+                <ExternalLink size={14} />
+              </div>
+            </div>
+          </a>
+        ))}
+      </>
+    );
+  }
+
+  // Default display for grid layout
   return (
-    <div className="w-full">
+    <>
       {posts.map((post) => (
         <a 
           key={post.id}
@@ -149,7 +204,7 @@ const LinkedInPosts = ({ limit, startIndex = 0 }: LinkedInPostsProps) => {
           </div>
         </a>
       ))}
-    </div>
+    </>
   );
 };
 
