@@ -5,7 +5,7 @@ import HeroSection from '@/components/HeroSection';
 import { useToast } from '@/hooks/use-toast';
 import InstagramFeed from '@/components/InstagramFeed';
 import LinkedInPosts from '@/components/LinkedInPosts';
-import { Instagram, Linkedin, Users, Calendar, MapPin } from 'lucide-react';
+import { Instagram, Linkedin, Users, Calendar, MapPin, Mountain, TreePalm, Cactus } from 'lucide-react';
 import ParallaxSection, { ParallaxElement } from '@/components/ParallaxSection';
 
 const Index = () => {
@@ -28,9 +28,9 @@ const Index = () => {
       
       {/* Mission Section with Parallax */}
       <ParallaxSection 
-        className="py-24 bg-white"
+        className="py-24 bg-gradient-to-b from-white to-blue-50"
         overlayOpacity={0.1}
-        backgroundImage="/lovable-uploads/230788b3-b7d2-4f9f-9dca-604ecf712a4e.png"
+        backgroundImage="/lovable-uploads/6c532c0e-cafd-4762-983d-f5ad0b480b4d.png"
       >
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -56,12 +56,31 @@ const Index = () => {
             
             <ParallaxElement speed={0.1} className="relative">
               <div className="relative rounded-lg overflow-hidden h-[500px] shadow-xl">
-                <div className="absolute inset-0 dot-pattern opacity-10 z-10"></div>
-                <div className="bg-latum-blue h-full w-full flex items-center justify-center">
+                <div className="bg-gradient-to-br from-latum-blue/90 to-latum-blue/70 h-full w-full flex items-center justify-center">
+                  {/* Latin American Themed Decorative Elements */}
+                  <ParallaxElement speed={-0.05} className="absolute top-10 left-10">
+                    <div className="text-white/80">
+                      <Cactus size={48} />
+                    </div>
+                  </ParallaxElement>
+                  
+                  <ParallaxElement speed={0.08} className="absolute bottom-10 right-10">
+                    <div className="text-white/80">
+                      <TreePalm size={48} />
+                    </div>
+                  </ParallaxElement>
+                  
+                  <ParallaxElement speed={-0.1} className="absolute top-1/4 right-1/4">
+                    <div className="text-white/60">
+                      <Mountain size={32} />
+                    </div>
+                  </ParallaxElement>
+                  
+                  {/* Map silhouette */}
                   <img 
-                    src="/lovable-uploads/230788b3-b7d2-4f9f-9dca-604ecf712a4e.png" 
-                    alt="LATUM Logo" 
-                    className="w-64 h-64"
+                    src="/lovable-uploads/6c532c0e-cafd-4762-983d-f5ad0b480b4d.png" 
+                    alt="Latin America Map" 
+                    className="w-64 h-64 opacity-90"
                   />
                 </div>
               </div>
@@ -77,9 +96,23 @@ const Index = () => {
       {/* Social Media Feed Section */}
       <section className="section-padding bg-gray-50 relative overflow-hidden">
         {/* Parallax decorative elements */}
-        <ParallaxElement speed={-0.15} className="absolute top-20 left-10 w-32 h-32 rounded-full bg-latum-blue/5 opacity-70"></ParallaxElement>
-        <ParallaxElement speed={0.1} className="absolute bottom-40 right-5 w-24 h-24 rounded-full bg-latum-accent/5 opacity-70"></ParallaxElement>
-        <ParallaxElement speed={0.2} className="absolute top-1/2 left-1/2 w-40 h-40 rounded-full bg-latum-blue/5 opacity-50"></ParallaxElement>
+        <ParallaxElement speed={-0.15} className="absolute top-20 left-10 w-32 h-32 rounded-full bg-latum-blue/5 opacity-70">
+          <div className="w-full h-full flex items-center justify-center text-latum-blue/30">
+            <Cactus size={32} />
+          </div>
+        </ParallaxElement>
+        
+        <ParallaxElement speed={0.1} className="absolute bottom-40 right-5 w-24 h-24 rounded-full bg-latum-accent/5 opacity-70">
+          <div className="w-full h-full flex items-center justify-center text-latum-accent/30">
+            <TreePalm size={24} />
+          </div>
+        </ParallaxElement>
+        
+        <ParallaxElement speed={0.2} className="absolute top-1/2 left-1/2 w-40 h-40 rounded-full bg-latum-blue/5 opacity-50">
+          <div className="w-full h-full flex items-center justify-center text-latum-blue/20">
+            <Mountain size={36} />
+          </div>
+        </ParallaxElement>
         
         <div className="container-custom relative z-10">
           {/* Instagram Feed */}
@@ -127,8 +160,10 @@ const Index = () => {
       </section>
       
       {/* Events Preview Section with Parallax Effect */}
-      <section className="relative overflow-hidden py-24 bg-white">
-        <ParallaxElement speed={-0.1} className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-gray-50 to-transparent"></ParallaxElement>
+      <section className="relative overflow-hidden py-24 bg-gradient-to-b from-gray-50 to-white">
+        <ParallaxElement speed={-0.1} className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-gray-50 to-transparent">
+          {/* Empty div for parallax effect only */}
+        </ParallaxElement>
         
         <div className="container-custom relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -213,7 +248,7 @@ const Index = () => {
       {/* Community Highlight Section with Parallax */}
       <ParallaxSection 
         className="py-24 text-white"
-        backgroundImage="/lovable-uploads/230788b3-b7d2-4f9f-9dca-604ecf712a4e.png"
+        backgroundImage="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         overlayOpacity={0.8}
       >
         <div className="container-custom">

@@ -1,16 +1,18 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, CSSProperties } from 'react';
 
 interface ParallaxElementProps {
   speed: number;
   className?: string;
   children: React.ReactNode;
+  style?: CSSProperties;
 }
 
 export const ParallaxElement: React.FC<ParallaxElementProps> = ({ 
   speed, 
   className = '',
-  children 
+  children,
+  style = {}
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -27,7 +29,7 @@ export const ParallaxElement: React.FC<ParallaxElementProps> = ({
   }, [speed]);
 
   return (
-    <div ref={elementRef} className={`will-change-transform ${className}`}>
+    <div ref={elementRef} className={`will-change-transform ${className}`} style={style}>
       {children}
     </div>
   );
