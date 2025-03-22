@@ -5,12 +5,14 @@ import { useLanguage } from '@/context/LanguageContext';
 import LanguageToggle from './LanguageToggle';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Header: React.FC = () => {
   const { t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   const navigation = [
     { name: t('nav.about'), href: '/about' },
@@ -79,7 +81,7 @@ const Header: React.FC = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
+        scrolled || isMenuOpen ? 'bg-white shadow-sm py-3' : 'bg-transparent py-5'
       }`}
     >
       <div className="container-custom flex items-center justify-between">
@@ -160,13 +162,14 @@ const Header: React.FC = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
-            className="fixed inset-0 bg-white z-40 pt-24 pb-6 px-6 flex flex-col md:hidden"
+            className="fixed inset-0 top-0 bg-white z-40 pt-24 pb-6 px-6 flex flex-col md:hidden overflow-auto"
             variants={mobileMenuVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
+            style={{ paddingTop: isMobile ? '80px' : '96px' }} // Adjusting top padding to avoid header overlap
           >
-            <div className="absolute top-6 right-6">
+            <div className="sticky top-6 right-6 flex justify-end">
               <button
                 onClick={() => setIsMenuOpen(false)}
                 className="text-gray-800 hover:text-latum-blue transition-colors p-2 rounded-full hover:bg-gray-100"
@@ -176,7 +179,7 @@ const Header: React.FC = () => {
               </button>
             </div>
             
-            <nav className="flex flex-col space-y-6">
+            <nav className="flex flex-col space-y-6 mt-4">
               {navigation.map((item, i) => (
                 <motion.div
                   key={item.name}
