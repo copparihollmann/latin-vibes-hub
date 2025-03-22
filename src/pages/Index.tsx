@@ -110,52 +110,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Events Preview Section */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl font-display font-bold mb-6">Upcoming Events</h2>
-            <p className="text-lg text-gray-700">
-              Join us for cultural exchanges, networking, and celebrating Latin American heritage
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((item) => (
-              <div 
-                key={item} 
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 animate-fade-in"
-                style={{ animationDelay: `${item * 100}ms` }}
-              >
-                <div className="h-48 bg-latum-blue/80 flex items-center justify-center">
-                  <span className="text-white text-lg font-medium">Event Image</span>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center space-x-2 mb-3">
-                    <span className="text-sm font-medium px-2 py-1 bg-latum-secondary rounded-full">
-                      {new Date().toLocaleDateString()}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-2">Latin American Mixer</h3>
-                  <p className="text-gray-600 mb-4">
-                    An evening of networking, music, and authentic Latin American cuisine.
-                  </p>
-                  <a href="/events" className="text-latum-blue font-medium hover:underline">
-                    Learn more →
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <a href="/events" className="btn-outline">
-              View All Events
-            </a>
-          </div>
-        </div>
-      </section>
-      
       {/* Community Highlight Section */}
       <section className="section-padding bg-latum-blue text-white">
         <div className="container-custom">

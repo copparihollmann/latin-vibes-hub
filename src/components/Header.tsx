@@ -38,6 +38,18 @@ const Header: React.FC = () => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
+  // Prevent scrolling when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   // Animations
   const mobileMenuVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -154,6 +166,16 @@ const Header: React.FC = () => {
             animate="visible"
             exit="exit"
           >
+            <div className="absolute top-6 right-6">
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="text-gray-800 hover:text-latum-blue transition-colors p-2 rounded-full hover:bg-gray-100"
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            
             <nav className="flex flex-col space-y-6">
               {navigation.map((item, i) => (
                 <motion.div
@@ -166,6 +188,7 @@ const Header: React.FC = () => {
                     className={`text-xl font-medium relative group ${
                       location.pathname === item.href ? 'text-latum-blue' : 'text-gray-800'
                     }`}
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     <span>{item.name}</span>
                     <span className={`absolute left-0 bottom-0 h-0.5 bg-latum-blue transform origin-left ${
@@ -178,6 +201,7 @@ const Header: React.FC = () => {
                 <Link
                   to="/contact"
                   className="btn-primary w-full text-center mt-4 inline-block relative overflow-hidden group"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   <span className="relative z-10">{t('nav.contact')}</span>
                   <span className="absolute inset-0 bg-latum-accent scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
