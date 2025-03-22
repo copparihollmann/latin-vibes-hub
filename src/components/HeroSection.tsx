@@ -8,59 +8,60 @@ import { cn } from '@/lib/utils';
 // Shape configuration for geometric elements
 const shapes = [
   // Circles in different blue tones
-  { type: 'circle', size: 180, x: '15%', y: '20%', color: 'rgba(0, 100, 179, 0.2)', delay: 0.1, speed: 0.05 },
-  { type: 'circle', size: 120, x: '85%', y: '25%', color: 'rgba(0, 120, 179, 0.15)', delay: 0.2, speed: 0.04 },
-  { type: 'circle', size: 90, x: '75%', y: '65%', color: 'rgba(0, 90, 179, 0.1)', delay: 0.3, speed: 0.06 },
-  { type: 'circle', size: 60, x: '25%', y: '75%', color: 'rgba(0, 140, 200, 0.2)', delay: 0.4, speed: 0.03 },
-  { type: 'circle', size: 200, x: '90%', y: '90%', color: 'rgba(0, 110, 179, 0.1)', delay: 0.5, speed: 0.02 },
-  { type: 'circle', size: 150, x: '5%', y: '40%', color: 'rgba(100, 180, 255, 0.1)', delay: 0.6, speed: 0.05 },
+  { type: 'circle', size: 180, x: '15%', y: '20%', color: 'rgba(0, 100, 179, 0.2)', delay: 0.1, speed: 0.05, parallaxIntensity: -0.1 },
+  { type: 'circle', size: 120, x: '85%', y: '25%', color: 'rgba(0, 120, 179, 0.15)', delay: 0.2, speed: 0.04, parallaxIntensity: 0.12 },
+  { type: 'circle', size: 90, x: '75%', y: '65%', color: 'rgba(0, 90, 179, 0.1)', delay: 0.3, speed: 0.06, parallaxIntensity: -0.08 },
+  { type: 'circle', size: 60, x: '25%', y: '75%', color: 'rgba(0, 140, 200, 0.2)', delay: 0.4, speed: 0.03, parallaxIntensity: 0.15 },
+  { type: 'circle', size: 200, x: '90%', y: '90%', color: 'rgba(0, 110, 179, 0.1)', delay: 0.5, speed: 0.02, parallaxIntensity: -0.05 },
+  { type: 'circle', size: 150, x: '5%', y: '40%', color: 'rgba(100, 180, 255, 0.1)', delay: 0.6, speed: 0.05, parallaxIntensity: 0.07 },
   
   // Lighter blue circles
-  { type: 'circle', size: 100, x: '40%', y: '85%', color: 'rgba(150, 200, 255, 0.1)', delay: 0.7, speed: 0.04 },
-  { type: 'circle', size: 70, x: '60%', y: '15%', color: 'rgba(200, 230, 255, 0.15)', delay: 0.8, speed: 0.03 },
+  { type: 'circle', size: 100, x: '40%', y: '85%', color: 'rgba(150, 200, 255, 0.1)', delay: 0.7, speed: 0.04, parallaxIntensity: -0.11 },
+  { type: 'circle', size: 70, x: '60%', y: '15%', color: 'rgba(200, 230, 255, 0.15)', delay: 0.8, speed: 0.03, parallaxIntensity: 0.09 },
   
   // Squares and rectangles
-  { type: 'square', size: 80, x: '30%', y: '30%', color: 'rgba(0, 120, 200, 0.1)', delay: 0.9, speed: 0.04, rotation: 45 },
-  { type: 'square', size: 120, x: '70%', y: '80%', color: 'rgba(0, 100, 160, 0.08)', delay: 1.0, speed: 0.05, rotation: 30 },
-  { type: 'rectangle', width: 150, height: 100, x: '80%', y: '40%', color: 'rgba(0, 80, 150, 0.05)', delay: 1.1, speed: 0.03, rotation: 15 },
-  { type: 'rectangle', width: 120, height: 60, x: '20%', y: '60%', color: 'rgba(50, 150, 220, 0.07)', delay: 1.2, speed: 0.04, rotation: 60 },
+  { type: 'square', size: 80, x: '30%', y: '30%', color: 'rgba(0, 120, 200, 0.1)', delay: 0.9, speed: 0.04, rotation: 45, parallaxIntensity: -0.13 },
+  { type: 'square', size: 120, x: '70%', y: '80%', color: 'rgba(0, 100, 160, 0.08)', delay: 1.0, speed: 0.05, rotation: 30, parallaxIntensity: 0.06 },
+  { type: 'rectangle', width: 150, height: 100, x: '80%', y: '40%', color: 'rgba(0, 80, 150, 0.05)', delay: 1.1, speed: 0.03, rotation: 15, parallaxIntensity: -0.07 },
+  { type: 'rectangle', width: 120, height: 60, x: '20%', y: '60%', color: 'rgba(50, 150, 220, 0.07)', delay: 1.2, speed: 0.04, rotation: 60, parallaxIntensity: 0.14 },
   
   // Triangles
-  { type: 'triangle', size: 100, x: '55%', y: '35%', color: 'rgba(0, 100, 190, 0.08)', delay: 1.3, speed: 0.05, rotation: 0 },
-  { type: 'triangle', size: 80, x: '15%', y: '85%', color: 'rgba(70, 160, 230, 0.06)', delay: 1.4, speed: 0.04, rotation: 180 },
+  { type: 'triangle', size: 100, x: '55%', y: '35%', color: 'rgba(0, 100, 190, 0.08)', delay: 1.3, speed: 0.05, rotation: 0, parallaxIntensity: -0.12 },
+  { type: 'triangle', size: 80, x: '15%', y: '85%', color: 'rgba(70, 160, 230, 0.06)', delay: 1.4, speed: 0.04, rotation: 180, parallaxIntensity: 0.08 },
   
   // Additional circles in varying sizes and blues
-  { type: 'circle', size: 40, x: '45%', y: '20%', color: 'rgba(100, 170, 230, 0.12)', delay: 1.5, speed: 0.06 },
-  { type: 'circle', size: 25, x: '85%', y: '65%', color: 'rgba(150, 210, 255, 0.15)', delay: 1.6, speed: 0.05 },
-  { type: 'circle', size: 35, x: '35%', y: '70%', color: 'rgba(120, 190, 250, 0.1)', delay: 1.7, speed: 0.04 },
-  { type: 'circle', size: 50, x: '65%', y: '45%', color: 'rgba(80, 160, 240, 0.09)', delay: 1.8, speed: 0.05 },
+  { type: 'circle', size: 40, x: '45%', y: '20%', color: 'rgba(100, 170, 230, 0.12)', delay: 1.5, speed: 0.06, parallaxIntensity: -0.09 },
+  { type: 'circle', size: 25, x: '85%', y: '65%', color: 'rgba(150, 210, 255, 0.15)', delay: 1.6, speed: 0.05, parallaxIntensity: 0.11 },
+  { type: 'circle', size: 35, x: '35%', y: '70%', color: 'rgba(120, 190, 250, 0.1)', delay: 1.7, speed: 0.04, parallaxIntensity: -0.06 },
+  { type: 'circle', size: 50, x: '65%', y: '45%', color: 'rgba(80, 160, 240, 0.09)', delay: 1.8, speed: 0.05, parallaxIntensity: 0.13 },
   
   // Small decorative elements
-  { type: 'circle', size: 15, x: '25%', y: '25%', color: 'rgba(200, 230, 255, 0.2)', delay: 1.9, speed: 0.07 },
-  { type: 'circle', size: 20, x: '75%', y: '55%', color: 'rgba(180, 220, 255, 0.18)', delay: 2.0, speed: 0.08 },
-  { type: 'circle', size: 12, x: '50%', y: '80%', color: 'rgba(220, 240, 255, 0.25)', delay: 2.1, speed: 0.06 },
-  { type: 'square', size: 18, x: '38%', y: '42%', color: 'rgba(160, 210, 250, 0.15)', delay: 2.2, speed: 0.07, rotation: 20 },
-  { type: 'square', size: 25, x: '62%', y: '28%', color: 'rgba(140, 200, 250, 0.12)', delay: 2.3, speed: 0.05, rotation: 10 },
+  { type: 'circle', size: 15, x: '25%', y: '25%', color: 'rgba(200, 230, 255, 0.2)', delay: 1.9, speed: 0.07, parallaxIntensity: -0.15 },
+  { type: 'circle', size: 20, x: '75%', y: '55%', color: 'rgba(180, 220, 255, 0.18)', delay: 2.0, speed: 0.08, parallaxIntensity: 0.1 },
+  { type: 'circle', size: 12, x: '50%', y: '80%', color: 'rgba(220, 240, 255, 0.25)', delay: 2.1, speed: 0.06, parallaxIntensity: -0.14 },
+  { type: 'square', size: 18, x: '38%', y: '42%', color: 'rgba(160, 210, 250, 0.15)', delay: 2.2, speed: 0.07, rotation: 20, parallaxIntensity: 0.08 },
+  { type: 'square', size: 25, x: '62%', y: '28%', color: 'rgba(140, 200, 250, 0.12)', delay: 2.3, speed: 0.05, rotation: 10, parallaxIntensity: -0.11 },
 ];
 
 // Floating elements with independent animation
 const floatingElements = [
-  { type: 'circle', size: 60, x: '30%', y: '20%', color: 'rgba(0, 120, 179, 0.1)', speed: 3 },
-  { type: 'circle', size: 40, x: '70%', y: '75%', color: 'rgba(100, 180, 255, 0.1)', speed: 5 },
-  { type: 'square', size: 50, x: '20%', y: '60%', color: 'rgba(0, 100, 179, 0.08)', speed: 4, rotation: 45 },
-  { type: 'square', size: 30, x: '85%', y: '30%', color: 'rgba(150, 200, 255, 0.08)', speed: 6, rotation: 30 },
+  { type: 'circle', size: 60, x: '30%', y: '20%', color: 'rgba(0, 120, 179, 0.1)', speed: 3, parallaxIntensity: 0.18 },
+  { type: 'circle', size: 40, x: '70%', y: '75%', color: 'rgba(100, 180, 255, 0.1)', speed: 5, parallaxIntensity: -0.2 },
+  { type: 'square', size: 50, x: '20%', y: '60%', color: 'rgba(0, 100, 179, 0.08)', speed: 4, rotation: 45, parallaxIntensity: 0.16 },
+  { type: 'square', size: 30, x: '85%', y: '30%', color: 'rgba(150, 200, 255, 0.08)', speed: 6, rotation: 30, parallaxIntensity: -0.17 },
 ];
 
 // Gradients for more interest
 const gradientOrbs = [
-  { x: '25%', y: '30%', width: 300, height: 300, colors: 'rgba(0, 120, 179, 0.2), rgba(100, 180, 255, 0.05)' },
-  { x: '75%', y: '70%', width: 400, height: 400, colors: 'rgba(50, 150, 220, 0.15), rgba(150, 210, 255, 0.03)' },
+  { x: '25%', y: '30%', width: 300, height: 300, colors: 'rgba(0, 120, 179, 0.2), rgba(100, 180, 255, 0.05)', parallaxIntensity: 0.1 },
+  { x: '75%', y: '70%', width: 400, height: 400, colors: 'rgba(50, 150, 220, 0.15), rgba(150, 210, 255, 0.03)', parallaxIntensity: -0.08 },
 ];
 
 const HeroSection: React.FC = () => {
   const { t } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const [animatedShapes, setAnimatedShapes] = useState(shapes);
 
@@ -69,6 +70,8 @@ const HeroSection: React.FC = () => {
     const handleScroll = () => {
       if (heroRef.current) {
         const scrollValue = window.scrollY;
+        setScrollY(scrollValue);
+        
         const opacity = Math.max(1 - scrollValue / 700, 0);
         const translateY = scrollValue * 0.3;
         
@@ -77,7 +80,7 @@ const HeroSection: React.FC = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -142,18 +145,23 @@ const HeroSection: React.FC = () => {
     }
   };
 
-  // Render a geometric shape based on its type
+  // Render a geometric shape based on its type with parallax effect
   const renderShape = (shape: any, index: number) => {
     const offsetX = ((mousePosition.x - 0.5) * -shape.speed * 50) + (shape.autoX || 0);
     const offsetY = ((mousePosition.y - 0.5) * -shape.speed * 50) + (shape.autoY || 0);
+    
+    // Apply parallax effect based on scroll position
+    const parallaxX = scrollY * (shape.parallaxIntensity || 0);
+    const parallaxY = scrollY * (shape.parallaxIntensity * 0.7 || 0);
+    
     const rotation = shape.rotation ? 
       shape.rotation + ((mousePosition.x - 0.5) * 5) : 
       ((mousePosition.x - 0.5) * 5);
     
     const shapeStyle = {
       position: 'absolute',
-      left: `calc(${shape.x} + ${offsetX}px)`,
-      top: `calc(${shape.y} + ${offsetY}px)`,
+      left: `calc(${shape.x} + ${offsetX + parallaxX}px)`,
+      top: `calc(${shape.y} + ${offsetY + parallaxY}px)`,
       background: shape.color,
       transition: 'transform 0.5s ease-out',
       transform: `rotate(${rotation}deg)`,
@@ -214,18 +222,22 @@ const HeroSection: React.FC = () => {
     return null;
   };
 
-  // Render gradient orbs
+  // Render gradient orbs with parallax effect
   const renderGradientOrb = (orb: any, index: number) => {
     const offsetX = (mousePosition.x - 0.5) * -30;
     const offsetY = (mousePosition.y - 0.5) * -30;
+    
+    // Apply parallax effect based on scroll position
+    const parallaxX = scrollY * (orb.parallaxIntensity || 0);
+    const parallaxY = scrollY * (orb.parallaxIntensity * 1.2 || 0);
     
     return (
       <div 
         key={`orb-${index}`}
         className="absolute rounded-full filter blur-3xl"
         style={{
-          left: `calc(${orb.x} + ${offsetX}px)`,
-          top: `calc(${orb.y} + ${offsetY}px)`,
+          left: `calc(${orb.x} + ${offsetX + parallaxX}px)`,
+          top: `calc(${orb.y} + ${offsetY + parallaxY}px)`,
           width: `${orb.width}px`,
           height: `${orb.height}px`,
           background: `radial-gradient(circle, ${orb.colors})`,
@@ -236,14 +248,18 @@ const HeroSection: React.FC = () => {
     );
   };
 
-  // Render elements that float independently
+  // Render elements that float independently with parallax effect
   const renderFloatingElement = (element: any, index: number) => {
     const delay = index * 0.5;
     
+    // Apply parallax effect based on scroll position
+    const parallaxX = scrollY * (element.parallaxIntensity || 0);
+    const parallaxY = scrollY * (element.parallaxIntensity * 0.9 || 0);
+    
     const floatingStyle = {
       position: 'absolute',
-      left: element.x,
-      top: element.y,
+      left: `calc(${element.x} + ${parallaxX}px)`,
+      top: `calc(${element.y} + ${parallaxY}px)`,
       background: element.color,
       width: `${element.size}px`,
       height: `${element.size}px`,
@@ -278,13 +294,16 @@ const HeroSection: React.FC = () => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background Layer */}
-      <div className="absolute inset-0 bg-gradient-to-br from-latum-blue via-latum-blue to-latum-blue/80"></div>
+      <div 
+        className="absolute inset-0 bg-gradient-to-br from-latum-blue via-latum-blue to-latum-blue/80"
+        style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+      ></div>
       
       {/* Dot Pattern */}
       <div 
         className="absolute inset-0 dot-pattern opacity-10"
         style={{
-          transform: `translate(${(mousePosition.x - 0.5) * -10}px, ${(mousePosition.y - 0.5) * -10}px)`
+          transform: `translate(${(mousePosition.x - 0.5) * -10}px, ${(mousePosition.y - 0.5) * -10 + scrollY * 0.05}px)`
         }}
       ></div>
       
@@ -366,6 +385,7 @@ const HeroSection: React.FC = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
+        style={{ transform: `translateY(${scrollY * 0.2}px)` }}
       >
         <button 
           onClick={scrollToContent}

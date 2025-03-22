@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import HeroSection from '@/components/HeroSection';
 import { useToast } from '@/hooks/use-toast';
@@ -10,6 +10,10 @@ import { Instagram, Linkedin } from 'lucide-react';
 const Index = () => {
   const { t } = useLanguage();
   const { toast } = useToast();
+  const [scrollY, setScrollY] = useState(0);
+  const missionRef = useRef<HTMLDivElement>(null);
+  const socialRef = useRef<HTMLDivElement>(null);
+  const communityRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     // Welcome toast for demonstration
@@ -20,16 +24,57 @@ const Index = () => {
     });
   }, [toast]);
 
+  // Handle parallax effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Calculate parallax transformations
+  const getMissionTransform = () => {
+    if (!missionRef.current) return {};
+    const rect = missionRef.current.getBoundingClientRect();
+    const offsetFromTop = rect.top + window.scrollY;
+    const offsetY = (scrollY - offsetFromTop + window.innerHeight) * 0.1;
+    return {
+      transform: `translateY(${Math.min(Math.max(-20, offsetY), 20)}px)`,
+    };
+  };
+
+  const getSocialTransform = () => {
+    if (!socialRef.current) return {};
+    const rect = socialRef.current.getBoundingClientRect();
+    const offsetFromTop = rect.top + window.scrollY;
+    const offsetY = (scrollY - offsetFromTop + window.innerHeight) * 0.05;
+    return {
+      transform: `translateY(${Math.min(Math.max(-15, offsetY), 15)}px)`,
+    };
+  };
+
+  const getCommunityTransform = () => {
+    if (!communityRef.current) return {};
+    const rect = communityRef.current.getBoundingClientRect();
+    const offsetFromTop = rect.top + window.scrollY;
+    const offsetY = (scrollY - offsetFromTop + window.innerHeight) * 0.08;
+    return {
+      transform: `translateY(${Math.min(Math.max(-25, offsetY), 25)}px)`,
+    };
+  };
+
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
       <HeroSection />
       
-      {/* Mission Section */}
-      <section id="mission" className="section-padding bg-white">
+      {/* Mission Section with Parallax */}
+      <section id="mission" className="section-padding bg-white relative" ref={missionRef}>
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8 animate-fade-in">
+            <div className="space-y-8 animate-fade-in" style={getMissionTransform()}>
               <div className="inline-block px-3 py-1 rounded-full bg-latum-blue/10 text-latum-blue text-sm font-medium">
                 {t('home.mission.title')}
               </div>
@@ -49,7 +94,13 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="relative rounded-lg overflow-hidden h-[500px] shadow-xl animate-fade-in" style={{ animationDelay: '200ms' }}>
+            <div 
+              className="relative rounded-lg overflow-hidden h-[500px] shadow-xl animate-fade-in" 
+              style={{ 
+                animationDelay: '200ms',
+                transform: `translateY(${scrollY * 0.04}px)` 
+              }}
+            >
               <div className="absolute inset-0 dot-pattern opacity-10 z-10"></div>
               <div className="bg-latum-blue h-full w-full flex items-center justify-center">
                 <img 
@@ -63,9 +114,13 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Social Media Feed Section */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-custom">
+      {/* Social Media Feed Section with Parallax */}
+      <section className="section-padding bg-gray-50 relative" ref={socialRef}>
+        <div 
+          className="absolute inset-0 bg-gray-50 z-0"
+          style={{ transform: `translateY(${scrollY * 0.02}px)` }}
+        ></div>
+        <div className="container-custom relative z-10" style={getSocialTransform()}>
           {/* Instagram Feed */}
           <div className="mb-16">
             <div className="flex flex-col md:flex-row items-center justify-between mb-8">
@@ -110,9 +165,17 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Community Highlight Section */}
-      <section className="section-padding bg-latum-blue text-white">
-        <div className="container-custom">
+      {/* Community Highlight Section with Parallax */}
+      <section className="section-padding bg-latum-blue text-white relative overflow-hidden" ref={communityRef}>
+        <div 
+          className="absolute -bottom-10 -right-10 w-96 h-96 rounded-full bg-latum-accent/20 z-0"
+          style={{ transform: `translate(${scrollY * 0.05}px, ${scrollY * -0.03}px)` }}
+        ></div>
+        <div 
+          className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-white/10 z-0"
+          style={{ transform: `translate(${scrollY * -0.04}px, ${scrollY * 0.02}px)` }}
+        ></div>
+        <div className="container-custom relative z-10" style={getCommunityTransform()}>
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-display font-bold mb-8">Join Our Community</h2>
             <p className="text-xl mb-10">
