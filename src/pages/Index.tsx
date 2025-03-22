@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import HeroSection from '@/components/HeroSection';
 import { useToast } from '@/hooks/use-toast';
-import { Instagram, Linkedin, ExternalLink, MessageCircle } from 'lucide-react';
+import { Instagram, Linkedin, ExternalLink, MessageCircle, Calendar } from 'lucide-react';
 
 const Index = () => {
   const { t } = useLanguage();
@@ -123,6 +123,39 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Events Highlight Section - NEW */}
+      <section className="py-16 bg-gradient-to-r from-latum-blue to-latum-blue/80 text-white">
+        <div className="container-custom">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+            <div className="md:w-2/3 space-y-6">
+              <div className="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-sm font-medium">
+                Stay Updated
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold">
+                Follow Our Instagram for All Events
+              </h2>
+              <p className="text-xl">
+                Don't miss out on our latest events! We post all our event announcements, updates, and highlights on Instagram - it's the best way to stay connected with everything happening at LATUM.
+              </p>
+              <a 
+                href="https://www.instagram.com/latum.club/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-white text-latum-blue px-6 py-3 rounded-md font-medium hover:bg-opacity-90 transition-all duration-300"
+              >
+                <Instagram size={20} />
+                Follow @latum.club
+              </a>
+            </div>
+            <div className="md:w-1/3 flex justify-center">
+              <div className="bg-white/10 p-8 rounded-full">
+                <Calendar size={120} className="text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Activities Section with Parallax */}
       <section className="section-padding bg-gray-50 relative" ref={activitiesRef}>
         <div className="container-custom relative z-10" style={getActivitiesTransform()}>
@@ -217,8 +250,14 @@ const Index = () => {
         <div className="container-custom relative z-10" style={getSocialTransform()}>
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-display font-bold mb-8">Follow Our Social Media</h2>
-            <p className="text-xl mb-10">
+            <p className="text-xl mb-4">
               Keep up with our latest events, activities, and announcements by following us on social media.
+            </p>
+            <p className="text-latum-blue font-semibold text-lg mb-10">
+              <span className="inline-flex items-center">
+                <Instagram size={24} className="mr-2" />
+                Follow us on Instagram for all event announcements and updates!
+              </span>
             </p>
             
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
@@ -296,3 +335,4 @@ const Index = () => {
 };
 
 export default Index;
+

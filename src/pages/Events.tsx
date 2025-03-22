@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin, Calendar, ExternalLink } from 'lucide-react';
 import { 
   Carousel, 
   CarouselContent, 
@@ -31,13 +31,39 @@ const Events = () => {
         </div>
       </section>
       
+      {/* Instagram Follow Alert - NEW */}
+      <section className="py-8 bg-latum-accent/10">
+        <div className="container-custom">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-6 rounded-xl border-2 border-latum-accent/30 bg-white">
+            <div className="flex items-center gap-4">
+              <div className="bg-latum-blue text-white p-3 rounded-full">
+                <Calendar size={24} />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-latum-blue">Stay Updated with All Events</h3>
+                <p className="text-gray-700">Follow our Instagram for real-time event announcements and updates!</p>
+              </div>
+            </div>
+            <a 
+              href="https://www.instagram.com/latum.club/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-latum-blue text-white px-6 py-3 rounded-md font-medium hover:bg-latum-blue/90 transition-all duration-300 whitespace-nowrap"
+            >
+              <Instagram size={20} />
+              <span>Follow @latum.club</span>
+            </a>
+          </div>
+        </div>
+      </section>
+      
       {/* Instagram Feed Section with Carousel */}
       <section className="py-16 md:py-24">
         <div className="container-custom">
           <div className="flex flex-col md:flex-row items-center justify-between mb-12">
             <h2 className="text-3xl font-display font-bold">Latest Events</h2>
             <a 
-              href="https://www.instagram.com/latum_ev/" 
+              href="https://www.instagram.com/latum.club/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-latum-blue font-medium transition-all duration-300 hover:opacity-80 mt-4 md:mt-0"
@@ -128,3 +154,4 @@ const Events = () => {
 };
 
 export default Events;
+
