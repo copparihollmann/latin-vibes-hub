@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Instagram, Linkedin } from 'lucide-react';
 import { 
@@ -11,27 +11,10 @@ import {
 } from '@/components/ui/carousel';
 import InstagramFeed from '@/components/InstagramFeed';
 import LinkedInPosts from '@/components/LinkedInPosts';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/components/ui/use-toast';
 
 const Events = () => {
   const { t } = useLanguage();
-  const { toast } = useToast();
-
-  // Seed sample posts when the component mounts
-  useEffect(() => {
-    const seedSamplePosts = async () => {
-      try {
-        await supabase.functions.invoke('seed-social-posts');
-      } catch (error) {
-        console.error('Error seeding sample posts:', error);
-        // No need to show toast for this since it's a background operation
-      }
-    };
-
-    seedSamplePosts();
-  }, []);
-
+  
   return (
     <div className="pt-16">
       {/* Hero Section */}

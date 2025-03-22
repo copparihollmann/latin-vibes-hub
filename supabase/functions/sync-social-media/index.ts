@@ -15,8 +15,16 @@ serve(async (req) => {
 
   try {
     // This function should be protected
+    // Check for auth header in a production environment
+    const authHeader = req.headers.get('Authorization');
+    
+    if (!authHeader && Deno.env.get('SUPABASE_ENV') === 'production') {
+      throw new Error('Unauthorized request');
+    }
+    
     // Parse request body
-    const { source } = await req.json()
+    const requestData = await req.json();
+    const { source } = requestData;
     
     // Create a Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL') as string
@@ -35,9 +43,12 @@ serve(async (req) => {
       
       // Here you would use the Instagram Graph API to fetch recent posts
       // For a real implementation, this would include:
-      // 1. Fetching media from Instagram Graph API
+      // 1. Fetching media from Instagram Graph API with endpoint like:
+      //    https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,timestamp&access_token=${instagramToken}
       // 2. Processing the response
       // 3. Storing the results in the instagram_posts table
+      
+      console.log('Would fetch Instagram posts using token: ' + instagramToken.substring(0, 5) + '...');
       
       result = { 
         success: true, 
@@ -61,6 +72,8 @@ serve(async (req) => {
       // 2. Fetching posts from the company page
       // 3. Processing the response
       // 4. Storing the results in the linkedin_posts table
+      
+      console.log('Would fetch LinkedIn posts using credentials');
       
       result = { 
         success: true, 
