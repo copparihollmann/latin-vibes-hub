@@ -1,8 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
 import { Calendar, ExternalLink } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useQuery } from '@tanstack/react-query';
 
 interface LinkedInPost {
   id: string;
@@ -17,93 +18,108 @@ interface LinkedInPostsProps {
   startIndex?: number;
 }
 
+const fetchLinkedInPosts = async () => {
+  // Try to fetch from edge function first
+  try {
+    const { data, error } = await supabase.functions.invoke('fetch-linkedin-posts');
+    if (!error && data?.posts) {
+      return data.posts.map((post: any) => ({
+        id: post.id,
+        url: post.url,
+        title: post.title,
+        summary: post.summary,
+        publishedDate: post.published_date
+      }));
+    }
+  } catch (err) {
+    console.error('Edge function error:', err);
+    // Fall back to dummy data if edge function fails
+  }
+
+  // Fallback to placeholder data
+  return [
+    {
+      id: '1',
+      url: 'https://www.linkedin.com/company/latum-ev/posts/',
+      title: 'New Partnership Announcement',
+      summary: 'We\'re excited to announce our new partnership with TUM International Office to better support Latin American students.',
+      publishedDate: '2023-06-01T09:00:00+0000'
+    },
+    {
+      id: '2',
+      url: 'https://www.linkedin.com/company/latum-ev/posts/',
+      title: 'Successful Networking Event',
+      summary: 'Thank you to all the professionals and students who attended our Latin American Professionals networking night!',
+      publishedDate: '2023-05-27T14:00:00+0000'
+    },
+    {
+      id: '3',
+      url: 'https://www.linkedin.com/company/latum-ev/posts/',
+      title: 'LATUM Scholarship Program',
+      summary: 'Learn about our new scholarship program designed to support Latin American students pursuing engineering degrees at TUM.',
+      publishedDate: '2023-05-20T10:30:00+0000'
+    },
+    {
+      id: '4',
+      url: 'https://www.linkedin.com/company/latum-ev/posts/',
+      title: 'Community Growth Milestone',
+      summary: 'LATUM has reached 500 members! Thank you to our amazing community for your continued support and engagement.',
+      publishedDate: '2023-05-15T16:45:00+0000'
+    },
+    {
+      id: '5',
+      url: 'https://www.linkedin.com/company/latum-ev/posts/',
+      title: 'Research Collaboration Opportunity',
+      summary: 'We\'re facilitating connections between Latin American researchers and TUM faculty. Join our upcoming virtual meetup.',
+      publishedDate: '2023-05-10T11:15:00+0000'
+    },
+    {
+      id: '6',
+      url: 'https://www.linkedin.com/company/latum-ev/posts/',
+      title: 'Career Workshop Success',
+      summary: 'Our resume and interview preparation workshop helped over 50 students prepare for their job search. More events coming soon!',
+      publishedDate: '2023-05-05T13:30:00+0000'
+    }
+  ];
+};
+
 const LinkedInPosts = ({ limit, startIndex = 0 }: LinkedInPostsProps) => {
-  const [posts, setPosts] = useState<LinkedInPost[]>([]);
-  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  
+  const { data: allPosts, isLoading, error } = useQuery({
+    queryKey: ['linkedinPosts'],
+    queryFn: fetchLinkedInPosts,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnWindowFocus: false,
+  });
+  
+  const posts = React.useMemo(() => {
+    if (!allPosts) return [];
+    
+    // If used in a carousel, we select based on startIndex
+    if (startIndex > 0) {
+      return [allPosts[startIndex % allPosts.length]];
+    } 
+    // Otherwise apply the regular limit
+    else if (limit) {
+      return allPosts.slice(0, limit);
+    }
+    
+    return allPosts;
+  }, [allPosts, limit, startIndex]);
 
-  useEffect(() => {
-    const fetchLinkedInPosts = async () => {
-      try {
-        // In a real implementation, this would fetch from LinkedIn API
-        // For now, we'll use placeholder data
-        setTimeout(() => {
-          // Placeholder data for demonstration
-          const dummyPosts: LinkedInPost[] = [
-            {
-              id: '1',
-              url: 'https://www.linkedin.com/company/latum-ev/posts/',
-              title: 'New Partnership Announcement',
-              summary: 'We\'re excited to announce our new partnership with TUM International Office to better support Latin American students.',
-              publishedDate: '2023-06-01T09:00:00+0000'
-            },
-            {
-              id: '2',
-              url: 'https://www.linkedin.com/company/latum-ev/posts/',
-              title: 'Successful Networking Event',
-              summary: 'Thank you to all the professionals and students who attended our Latin American Professionals networking night!',
-              publishedDate: '2023-05-27T14:00:00+0000'
-            },
-            {
-              id: '3',
-              url: 'https://www.linkedin.com/company/latum-ev/posts/',
-              title: 'LATUM Scholarship Program',
-              summary: 'Learn about our new scholarship program designed to support Latin American students pursuing engineering degrees at TUM.',
-              publishedDate: '2023-05-20T10:30:00+0000'
-            },
-            {
-              id: '4',
-              url: 'https://www.linkedin.com/company/latum-ev/posts/',
-              title: 'Community Growth Milestone',
-              summary: 'LATUM has reached 500 members! Thank you to our amazing community for your continued support and engagement.',
-              publishedDate: '2023-05-15T16:45:00+0000'
-            },
-            {
-              id: '5',
-              url: 'https://www.linkedin.com/company/latum-ev/posts/',
-              title: 'Research Collaboration Opportunity',
-              summary: 'We\'re facilitating connections between Latin American researchers and TUM faculty. Join our upcoming virtual meetup.',
-              publishedDate: '2023-05-10T11:15:00+0000'
-            },
-            {
-              id: '6',
-              url: 'https://www.linkedin.com/company/latum-ev/posts/',
-              title: 'Career Workshop Success',
-              summary: 'Our resume and interview preparation workshop helped over 50 students prepare for their job search. More events coming soon!',
-              publishedDate: '2023-05-05T13:30:00+0000'
-            }
-          ];
-          
-          // Apply startIndex and limit if provided
-          let selectedPosts = [...dummyPosts];
-          
-          // If used in a carousel, we select based on startIndex
-          if (startIndex > 0) {
-            selectedPosts = [dummyPosts[startIndex % dummyPosts.length]];
-          } 
-          // Otherwise apply the regular limit
-          else if (limit) {
-            selectedPosts = dummyPosts.slice(0, limit);
-          }
-          
-          setPosts(selectedPosts);
-          setLoading(false);
-        }, 800);
-      } catch (error) {
-        console.error('Error fetching LinkedIn posts:', error);
-        toast({
-          title: "Error loading LinkedIn posts",
-          description: "Please check back later",
-          variant: "destructive",
-        });
-        setLoading(false);
-      }
-    };
+  // Show error toast if API request fails
+  React.useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error loading LinkedIn posts",
+        description: "Please check back later",
+        variant: "destructive",
+      });
+    }
+  }, [error, toast]);
 
-    fetchLinkedInPosts();
-  }, [toast, limit, startIndex]);
-
-  if (loading) {
+  if (isLoading) {
     // Show appropriate loading skeletons based on usage context
     if (startIndex > 0) {
       // Single post skeleton for carousel
