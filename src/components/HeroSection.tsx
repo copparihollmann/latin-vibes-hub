@@ -3,12 +3,66 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+
+// Shape configuration for geometric elements
+const shapes = [
+  // Circles in different blue tones
+  { type: 'circle', size: 180, x: '15%', y: '20%', color: 'rgba(0, 100, 179, 0.2)', delay: 0.1, speed: 0.05 },
+  { type: 'circle', size: 120, x: '85%', y: '25%', color: 'rgba(0, 120, 179, 0.15)', delay: 0.2, speed: 0.04 },
+  { type: 'circle', size: 90, x: '75%', y: '65%', color: 'rgba(0, 90, 179, 0.1)', delay: 0.3, speed: 0.06 },
+  { type: 'circle', size: 60, x: '25%', y: '75%', color: 'rgba(0, 140, 200, 0.2)', delay: 0.4, speed: 0.03 },
+  { type: 'circle', size: 200, x: '90%', y: '90%', color: 'rgba(0, 110, 179, 0.1)', delay: 0.5, speed: 0.02 },
+  { type: 'circle', size: 150, x: '5%', y: '40%', color: 'rgba(100, 180, 255, 0.1)', delay: 0.6, speed: 0.05 },
+  
+  // Lighter blue circles
+  { type: 'circle', size: 100, x: '40%', y: '85%', color: 'rgba(150, 200, 255, 0.1)', delay: 0.7, speed: 0.04 },
+  { type: 'circle', size: 70, x: '60%', y: '15%', color: 'rgba(200, 230, 255, 0.15)', delay: 0.8, speed: 0.03 },
+  
+  // Squares and rectangles
+  { type: 'square', size: 80, x: '30%', y: '30%', color: 'rgba(0, 120, 200, 0.1)', delay: 0.9, speed: 0.04, rotation: 45 },
+  { type: 'square', size: 120, x: '70%', y: '80%', color: 'rgba(0, 100, 160, 0.08)', delay: 1.0, speed: 0.05, rotation: 30 },
+  { type: 'rectangle', width: 150, height: 100, x: '80%', y: '40%', color: 'rgba(0, 80, 150, 0.05)', delay: 1.1, speed: 0.03, rotation: 15 },
+  { type: 'rectangle', width: 120, height: 60, x: '20%', y: '60%', color: 'rgba(50, 150, 220, 0.07)', delay: 1.2, speed: 0.04, rotation: 60 },
+  
+  // Triangles
+  { type: 'triangle', size: 100, x: '55%', y: '35%', color: 'rgba(0, 100, 190, 0.08)', delay: 1.3, speed: 0.05, rotation: 0 },
+  { type: 'triangle', size: 80, x: '15%', y: '85%', color: 'rgba(70, 160, 230, 0.06)', delay: 1.4, speed: 0.04, rotation: 180 },
+  
+  // Additional circles in varying sizes and blues
+  { type: 'circle', size: 40, x: '45%', y: '20%', color: 'rgba(100, 170, 230, 0.12)', delay: 1.5, speed: 0.06 },
+  { type: 'circle', size: 25, x: '85%', y: '65%', color: 'rgba(150, 210, 255, 0.15)', delay: 1.6, speed: 0.05 },
+  { type: 'circle', size: 35, x: '35%', y: '70%', color: 'rgba(120, 190, 250, 0.1)', delay: 1.7, speed: 0.04 },
+  { type: 'circle', size: 50, x: '65%', y: '45%', color: 'rgba(80, 160, 240, 0.09)', delay: 1.8, speed: 0.05 },
+  
+  // Small decorative elements
+  { type: 'circle', size: 15, x: '25%', y: '25%', color: 'rgba(200, 230, 255, 0.2)', delay: 1.9, speed: 0.07 },
+  { type: 'circle', size: 20, x: '75%', y: '55%', color: 'rgba(180, 220, 255, 0.18)', delay: 2.0, speed: 0.08 },
+  { type: 'circle', size: 12, x: '50%', y: '80%', color: 'rgba(220, 240, 255, 0.25)', delay: 2.1, speed: 0.06 },
+  { type: 'square', size: 18, x: '38%', y: '42%', color: 'rgba(160, 210, 250, 0.15)', delay: 2.2, speed: 0.07, rotation: 20 },
+  { type: 'square', size: 25, x: '62%', y: '28%', color: 'rgba(140, 200, 250, 0.12)', delay: 2.3, speed: 0.05, rotation: 10 },
+];
+
+// Floating elements with independent animation
+const floatingElements = [
+  { type: 'circle', size: 60, x: '30%', y: '20%', color: 'rgba(0, 120, 179, 0.1)', speed: 3 },
+  { type: 'circle', size: 40, x: '70%', y: '75%', color: 'rgba(100, 180, 255, 0.1)', speed: 5 },
+  { type: 'square', size: 50, x: '20%', y: '60%', color: 'rgba(0, 100, 179, 0.08)', speed: 4, rotation: 45 },
+  { type: 'square', size: 30, x: '85%', y: '30%', color: 'rgba(150, 200, 255, 0.08)', speed: 6, rotation: 30 },
+];
+
+// Gradients for more interest
+const gradientOrbs = [
+  { x: '25%', y: '30%', width: 300, height: 300, colors: 'rgba(0, 120, 179, 0.2), rgba(100, 180, 255, 0.05)' },
+  { x: '75%', y: '70%', width: 400, height: 400, colors: 'rgba(50, 150, 220, 0.15), rgba(150, 210, 255, 0.03)' },
+];
 
 const HeroSection: React.FC = () => {
   const { t } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [animatedShapes, setAnimatedShapes] = useState(shapes);
 
   // Parallax effect on scroll
   useEffect(() => {
@@ -45,6 +99,21 @@ const HeroSection: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // Subtle automatic animation for shapes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimatedShapes(prevShapes => 
+        prevShapes.map(shape => ({
+          ...shape,
+          autoX: Math.sin(Date.now() / 2000 * shape.speed) * 2,
+          autoY: Math.cos(Date.now() / 2000 * shape.speed) * 2
+        }))
+      );
+    }, 50);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   const scrollToContent = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -73,12 +142,145 @@ const HeroSection: React.FC = () => {
     }
   };
 
+  // Render a geometric shape based on its type
+  const renderShape = (shape: any, index: number) => {
+    const offsetX = ((mousePosition.x - 0.5) * -shape.speed * 50) + (shape.autoX || 0);
+    const offsetY = ((mousePosition.y - 0.5) * -shape.speed * 50) + (shape.autoY || 0);
+    const rotation = shape.rotation ? 
+      shape.rotation + ((mousePosition.x - 0.5) * 5) : 
+      ((mousePosition.x - 0.5) * 5);
+    
+    const shapeStyle = {
+      position: 'absolute',
+      left: `calc(${shape.x} + ${offsetX}px)`,
+      top: `calc(${shape.y} + ${offsetY}px)`,
+      background: shape.color,
+      transition: 'transform 0.5s ease-out',
+      transform: `rotate(${rotation}deg)`,
+      animation: `float ${5 + index % 3}s ease-in-out infinite alternate-reverse`,
+      zIndex: 1,
+    } as React.CSSProperties;
+    
+    if (shape.type === 'circle') {
+      return (
+        <div 
+          key={index}
+          style={{
+            ...shapeStyle,
+            width: `${shape.size}px`,
+            height: `${shape.size}px`,
+            borderRadius: '50%',
+          }}
+        />
+      );
+    } else if (shape.type === 'square') {
+      return (
+        <div 
+          key={index}
+          style={{
+            ...shapeStyle,
+            width: `${shape.size}px`,
+            height: `${shape.size}px`,
+          }}
+        />
+      );
+    } else if (shape.type === 'rectangle') {
+      return (
+        <div 
+          key={index}
+          style={{
+            ...shapeStyle,
+            width: `${shape.width}px`,
+            height: `${shape.height}px`,
+          }}
+        />
+      );
+    } else if (shape.type === 'triangle') {
+      return (
+        <div 
+          key={index}
+          style={{
+            ...shapeStyle,
+            width: 0,
+            height: 0,
+            backgroundColor: 'transparent',
+            borderLeft: `${shape.size / 2}px solid transparent`,
+            borderRight: `${shape.size / 2}px solid transparent`,
+            borderBottom: `${shape.size}px solid ${shape.color}`,
+          }}
+        />
+      );
+    }
+    return null;
+  };
+
+  // Render gradient orbs
+  const renderGradientOrb = (orb: any, index: number) => {
+    const offsetX = (mousePosition.x - 0.5) * -30;
+    const offsetY = (mousePosition.y - 0.5) * -30;
+    
+    return (
+      <div 
+        key={`orb-${index}`}
+        className="absolute rounded-full filter blur-3xl"
+        style={{
+          left: `calc(${orb.x} + ${offsetX}px)`,
+          top: `calc(${orb.y} + ${offsetY}px)`,
+          width: `${orb.width}px`,
+          height: `${orb.height}px`,
+          background: `radial-gradient(circle, ${orb.colors})`,
+          opacity: 0.4,
+          transition: 'transform 0.8s ease-out',
+        }}
+      />
+    );
+  };
+
+  // Render elements that float independently
+  const renderFloatingElement = (element: any, index: number) => {
+    const delay = index * 0.5;
+    
+    const floatingStyle = {
+      position: 'absolute',
+      left: element.x,
+      top: element.y,
+      background: element.color,
+      width: `${element.size}px`,
+      height: `${element.size}px`,
+      animation: `float ${element.speed}s ease-in-out ${delay}s infinite alternate`,
+      zIndex: 1,
+    } as React.CSSProperties;
+    
+    if (element.type === 'circle') {
+      return (
+        <div 
+          key={`float-${index}`}
+          style={{
+            ...floatingStyle,
+            borderRadius: '50%',
+          }}
+        />
+      );
+    } else if (element.type === 'square') {
+      return (
+        <div 
+          key={`float-${index}`}
+          style={{
+            ...floatingStyle,
+            transform: `rotate(${element.rotation}deg)`,
+          }}
+        />
+      );
+    }
+    return null;
+  };
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background Layer */}
       <div className="absolute inset-0 bg-gradient-to-br from-latum-blue via-latum-blue to-latum-blue/80"></div>
       
-      {/* Animated Background Elements */}
+      {/* Dot Pattern */}
       <div 
         className="absolute inset-0 dot-pattern opacity-10"
         style={{
@@ -87,20 +289,13 @@ const HeroSection: React.FC = () => {
       ></div>
       
       {/* Gradient Orbs */}
-      <div 
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-latum-accent/20 filter blur-3xl"
-        style={{ 
-          transform: `translate(${(mousePosition.x - 0.5) * -30}px, ${(mousePosition.y - 0.5) * -30}px)`,
-          opacity: 0.4
-        }}
-      ></div>
-      <div 
-        className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-white/10 filter blur-3xl"
-        style={{ 
-          transform: `translate(${(mousePosition.x - 0.5) * 20}px, ${(mousePosition.y - 0.5) * 20}px)`,
-          opacity: 0.3
-        }}
-      ></div>
+      {gradientOrbs.map(renderGradientOrb)}
+      
+      {/* Geometric Shapes */}
+      {animatedShapes.map(renderShape)}
+      
+      {/* Floating Elements */}
+      {floatingElements.map(renderFloatingElement)}
       
       {/* Hero Content */}
       <motion.div 
@@ -142,7 +337,10 @@ const HeroSection: React.FC = () => {
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
             >
-              <span className="btn-primary inline-block relative z-10">
+              <span className={cn(
+                "btn-primary inline-block relative z-10",
+                isHovering ? "bg-latum-accent text-white" : ""
+              )}>
                 {t('home.hero.cta')}
               </span>
               <span className="absolute inset-0 bg-latum-accent scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
@@ -162,7 +360,7 @@ const HeroSection: React.FC = () => {
         ></div>
       )}
       
-      {/* Scroll Down Indicator - Centered properly */}
+      {/* Scroll Down Indicator */}
       <motion.div 
         className="absolute left-0 right-0 bottom-10 mx-auto flex justify-center items-center"
         initial={{ opacity: 0, y: -20 }}
