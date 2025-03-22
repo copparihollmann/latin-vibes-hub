@@ -9,13 +9,6 @@ const HeroSection: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
-  
-  // Parallax elements refs
-  const circleOneRef = useRef<HTMLDivElement>(null);
-  const circleTwoRef = useRef<HTMLDivElement>(null);
-  const circleThreeRef = useRef<HTMLDivElement>(null);
-  const blueBlobRef = useRef<HTMLDivElement>(null);
-  const orangeBlobRef = useRef<HTMLDivElement>(null);
 
   // Parallax effect on scroll
   useEffect(() => {
@@ -27,23 +20,6 @@ const HeroSection: React.FC = () => {
         
         heroRef.current.style.opacity = opacity.toString();
         heroRef.current.style.transform = `translateY(${translateY}px)`;
-      }
-      
-      // Parallax for floating elements
-      if (circleOneRef.current) {
-        circleOneRef.current.style.transform = `translateY(${window.scrollY * 0.2}px)`;
-      }
-      if (circleTwoRef.current) {
-        circleTwoRef.current.style.transform = `translateY(${window.scrollY * -0.15}px)`;
-      }
-      if (circleThreeRef.current) {
-        circleThreeRef.current.style.transform = `translateY(${window.scrollY * 0.25}px)`;
-      }
-      if (blueBlobRef.current) {
-        blueBlobRef.current.style.transform = `translateY(${window.scrollY * -0.1}px)`;
-      }
-      if (orangeBlobRef.current) {
-        orangeBlobRef.current.style.transform = `translateY(${window.scrollY * 0.15}px)`;
       }
     };
 
@@ -62,23 +38,6 @@ const HeroSection: React.FC = () => {
         const y = (clientY - top) / height;
         
         setMousePosition({ x, y });
-        
-        // Update parallax elements based on mouse position
-        if (circleOneRef.current) {
-          circleOneRef.current.style.transform = `translate(${(x - 0.5) * -15}px, ${(y - 0.5) * -15}px)`;
-        }
-        if (circleTwoRef.current) {
-          circleTwoRef.current.style.transform = `translate(${(x - 0.5) * 20}px, ${(y - 0.5) * 20}px)`;
-        }
-        if (circleThreeRef.current) {
-          circleThreeRef.current.style.transform = `translate(${(x - 0.5) * -25}px, ${(y - 0.5) * -25}px)`;
-        }
-        if (blueBlobRef.current) {
-          blueBlobRef.current.style.transform = `translate(${(x - 0.5) * 30}px, ${(y - 0.5) * 30}px)`;
-        }
-        if (orangeBlobRef.current) {
-          orangeBlobRef.current.style.transform = `translate(${(x - 0.5) * -20}px, ${(y - 0.5) * -20}px)`;
-        }
       }
     };
     
@@ -125,32 +84,6 @@ const HeroSection: React.FC = () => {
         style={{
           transform: `translate(${(mousePosition.x - 0.5) * -10}px, ${(mousePosition.y - 0.5) * -10}px)`
         }}
-      ></div>
-      
-      {/* Parallax floating elements */}
-      <div 
-        ref={circleOneRef}
-        className="absolute top-[15%] left-[20%] w-20 h-20 rounded-full bg-white/10 backdrop-blur-lg will-change-transform"
-      ></div>
-      
-      <div 
-        ref={circleTwoRef}
-        className="absolute bottom-[25%] right-[15%] w-32 h-32 rounded-full bg-white/5 backdrop-blur-md will-change-transform"
-      ></div>
-      
-      <div 
-        ref={circleThreeRef}
-        className="absolute top-[30%] right-[25%] w-16 h-16 rounded-full bg-latum-accent/10 backdrop-blur-lg will-change-transform"
-      ></div>
-      
-      <div 
-        ref={blueBlobRef}
-        className="absolute bottom-[20%] left-[10%] w-48 h-48 rounded-[40%_60%_70%_30%/40%_50%_60%_50%] bg-latum-blue/20 backdrop-blur-xl will-change-transform"
-      ></div>
-      
-      <div 
-        ref={orangeBlobRef}
-        className="absolute top-[15%] right-[10%] w-40 h-40 rounded-[60%_40%_30%_70%/60%_30%_70%_40%] bg-latum-accent/10 backdrop-blur-xl will-change-transform"
       ></div>
       
       {/* Gradient Orbs */}
