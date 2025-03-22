@@ -3,9 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import HeroSection from '@/components/HeroSection';
 import { useToast } from '@/hooks/use-toast';
-import InstagramFeed from '@/components/InstagramFeed';
-import LinkedInPosts from '@/components/LinkedInPosts';
-import { Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin, ExternalLink } from 'lucide-react';
 
 const Index = () => {
   const { t } = useLanguage();
@@ -114,52 +112,47 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Social Media Feed Section with Parallax */}
+      {/* Social Media Links Section with Parallax */}
       <section className="section-padding bg-gray-50 relative" ref={socialRef}>
         <div 
           className="absolute inset-0 bg-gray-50 z-0"
           style={{ transform: `translateY(${scrollY * 0.02}px)` }}
         ></div>
         <div className="container-custom relative z-10" style={getSocialTransform()}>
-          {/* Instagram Feed */}
-          <div className="mb-16">
-            <div className="flex flex-col md:flex-row items-center justify-between mb-8">
-              <h2 className="text-3xl font-display font-bold">Latest Instagram Posts</h2>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-display font-bold mb-8">Follow Our Social Media</h2>
+            <p className="text-xl mb-10">
+              Keep up with our latest events, activities, and announcements by following us on social media.
+            </p>
+            
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
               <a 
                 href="https://www.instagram.com/latum_ev/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-latum-blue font-medium transition-all duration-300 hover:opacity-80 mt-4 md:mt-0"
+                className="flex items-center gap-3 text-latum-blue bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 w-full md:w-auto"
               >
-                <Instagram size={20} />
-                <span>Follow us on Instagram</span>
+                <Instagram size={36} />
+                <div className="text-left">
+                  <h3 className="text-xl font-bold">Instagram</h3>
+                  <p className="text-gray-600">Follow our events and activities</p>
+                </div>
+                <ExternalLink className="ml-auto" size={20} />
               </a>
-            </div>
-            
-            {/* Instagram feed grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <InstagramFeed limit={3} />
-            </div>
-          </div>
-          
-          {/* LinkedIn Posts */}
-          <div>
-            <div className="flex flex-col md:flex-row items-center justify-between mb-8">
-              <h2 className="text-3xl font-display font-bold">Latest Activities</h2>
+              
               <a 
                 href="https://www.linkedin.com/company/latum-ev/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-latum-blue font-medium transition-all duration-300 hover:opacity-80 mt-4 md:mt-0"
+                className="flex items-center gap-3 text-latum-blue bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 w-full md:w-auto"
               >
-                <Linkedin size={20} />
-                <span>Connect on LinkedIn</span>
+                <Linkedin size={36} />
+                <div className="text-left">
+                  <h3 className="text-xl font-bold">LinkedIn</h3>
+                  <p className="text-gray-600">Connect with our professional network</p>
+                </div>
+                <ExternalLink className="ml-auto" size={20} />
               </a>
-            </div>
-            
-            {/* LinkedIn posts grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <LinkedInPosts limit={2} />
             </div>
           </div>
         </div>
