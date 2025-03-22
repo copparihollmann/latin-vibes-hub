@@ -1,4 +1,3 @@
-
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1'
 
@@ -35,25 +34,68 @@ serve(async (req) => {
     
     // Sync Instagram posts
     if (source === 'instagram') {
-      const instagramToken = Deno.env.get('INSTAGRAM_TOKEN')
+      const instagramToken = Deno.env.get('INSTAGRAM_TOKEN');
+      const instagramUserId = Deno.env.get('INSTAGRAM_USER_ID');
       
-      if (!instagramToken) {
-        throw new Error('Instagram token not configured')
+      if (!instagramToken || !instagramUserId) {
+        throw new Error('Instagram credentials not configured');
       }
       
-      // Here you would use the Instagram Graph API to fetch recent posts
-      // For a real implementation, this would include:
-      // 1. Fetching media from Instagram Graph API with endpoint like:
-      //    https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,timestamp&access_token=${instagramToken}
-      // 2. Processing the response
-      // 3. Storing the results in the instagram_posts table
-      
-      console.log('Would fetch Instagram posts using token: ' + instagramToken.substring(0, 5) + '...');
-      
-      result = { 
-        success: true, 
-        message: 'Instagram sync would happen here with real API credentials',
-        note: 'This is a placeholder for actual Instagram API integration'
+      try {
+        // Fetch media from Instagram Graph API
+        const response = await fetch(
+          `https://graph.instagram.com/${instagramUserId}/media?fields=id,caption,media_type,media_url,permalink,timestamp&access_token=${instagramToken}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(`Instagram API error: ${data.error?.message || 'Unknown error'}`);
+        }
+
+        if (data && data.data && data.data.length > 0) {
+          // Process posts and store in database
+          const instagramPosts = data.data.map((post: any) => ({
+            id: post.id,
+            permalink: post.permalink,
+            media_url: post.media_url,
+            caption: post.caption || '',
+            timestamp: post.timestamp,
+            media_type: post.media_type,
+          }));
+
+          // First, clear existing posts
+          await supabase.from('instagram_posts').delete().neq('id', '0');
+
+          // Then insert new posts
+          const { error: insertError } = await supabase.from('instagram_posts').insert(instagramPosts);
+
+          if (insertError) {
+            throw insertError;
+          }
+
+          result = {
+            success: true,
+            message: `Synced ${instagramPosts.length} Instagram posts successfully`,
+          };
+        } else {
+          result = {
+            success: true,
+            message: 'No Instagram posts found to sync',
+          };
+        }
+      } catch (error) {
+        console.error('Error syncing Instagram posts:', error);
+        result = {
+          success: false,
+          message: `Error syncing Instagram posts: ${error.message}`,
+        };
       }
     }
     
@@ -65,13 +107,6 @@ serve(async (req) => {
       if (!linkedinClientId || !linkedinClientSecret) {
         throw new Error('LinkedIn credentials not configured')
       }
-      
-      // Here you would use the LinkedIn API to fetch recent posts
-      // For a real implementation, this would include:
-      // 1. Authenticating with LinkedIn API
-      // 2. Fetching posts from the company page
-      // 3. Processing the response
-      // 4. Storing the results in the linkedin_posts table
       
       console.log('Would fetch LinkedIn posts using credentials');
       
