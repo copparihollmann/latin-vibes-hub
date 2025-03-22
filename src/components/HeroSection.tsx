@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { ChevronDown } from 'lucide-react';
@@ -64,19 +63,27 @@ const HeroSection: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const [animatedShapes, setAnimatedShapes] = useState(shapes);
+  const textRef = useRef<HTMLDivElement>(null);
 
-  // Parallax effect on scroll
+  // Parallax effect on scroll - modified for smoother text animations
   useEffect(() => {
     const handleScroll = () => {
       if (heroRef.current) {
         const scrollValue = window.scrollY;
         setScrollY(scrollValue);
         
-        const opacity = Math.max(1 - scrollValue / 700, 0);
+        // Apply opacity change more gradually
+        const opacity = Math.max(1 - scrollValue / 900, 0);
         const translateY = scrollValue * 0.3;
         
         heroRef.current.style.opacity = opacity.toString();
         heroRef.current.style.transform = `translateY(${translateY}px)`;
+        
+        // Apply smoother transitions to the text container
+        if (textRef.current) {
+          // Use CSS transform for better performance
+          textRef.current.style.transition = 'transform 0.05s linear';
+        }
       }
     };
 
@@ -124,14 +131,15 @@ const HeroSection: React.FC = () => {
     });
   };
 
-  // Animation variants for framer-motion
+  // Animation variants for framer-motion - modified for smoother animations
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3
+        staggerChildren: 0.08,
+        delayChildren: 0.2,
+        ease: "easeInOut"
       }
     }
   };
@@ -141,7 +149,13 @@ const HeroSection: React.FC = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { 
+        duration: 0.5, 
+        ease: "easeOut",
+        // Prevent re-animation during scroll
+        stiffness: 100,
+        damping: 15
+      }
     }
   };
 
@@ -316,15 +330,15 @@ const HeroSection: React.FC = () => {
       {/* Floating Elements */}
       {floatingElements.map(renderFloatingElement)}
       
-      {/* Hero Content */}
+      {/* Hero Content - added ref to control text animation */}
       <motion.div 
         ref={heroRef}
-        className="container-custom relative z-10 text-white space-y-6 mt-16"
+        className="container-custom relative z-10 text-white space-y-6 mt-16 will-change-transform"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="max-w-4xl mx-auto text-center">
+        <div ref={textRef} className="max-w-4xl mx-auto text-center will-change-transform">
           <motion.div 
             variants={itemVariants}
             className="inline-block px-4 py-1 mb-4 bg-white/10 backdrop-blur-sm rounded-full"
@@ -334,14 +348,14 @@ const HeroSection: React.FC = () => {
           
           <motion.h1 
             variants={itemVariants}
-            className="text-5xl md:text-7xl font-display font-bold mb-6 leading-tight"
+            className="text-5xl md:text-7xl font-display font-bold mb-6 leading-tight will-change-transform"
           >
             {t('home.hero.title')}
           </motion.h1>
           
           <motion.p 
             variants={itemVariants}
-            className="text-xl md:text-2xl font-light max-w-3xl mx-auto"
+            className="text-xl md:text-2xl font-light max-w-3xl mx-auto will-change-transform"
           >
             {t('home.hero.subtitle')}
           </motion.p>
