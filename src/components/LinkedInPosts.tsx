@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
@@ -94,10 +95,10 @@ const LinkedInPosts = ({ limit, startIndex = 0 }: LinkedInPostsProps) => {
   });
   
   const posts = React.useMemo(() => {
-    if (!allPosts) return [];
+    if (!allPosts || allPosts.length === 0) return [];
     
     // If used in a carousel, we select based on startIndex
-    if (startIndex > 0) {
+    if (startIndex > 0 && allPosts.length > 0) {
       return [allPosts[startIndex % allPosts.length]];
     } 
     // Otherwise apply the regular limit
@@ -118,6 +119,17 @@ const LinkedInPosts = ({ limit, startIndex = 0 }: LinkedInPostsProps) => {
       });
     }
   }, [error, toast]);
+
+  // Handle empty posts array case
+  if (posts.length === 0 && !isLoading) {
+    return (
+      <div className="w-full h-full">
+        <div className="rounded-lg overflow-hidden bg-white p-6 h-full">
+          <p className="text-gray-500 text-center">No posts available</p>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     // Show appropriate loading skeletons based on usage context
