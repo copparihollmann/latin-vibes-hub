@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -17,9 +16,7 @@ const translations = {
     // Navigation
     'nav.about': 'About',
     'nav.team': 'Team',
-    'nav.events': 'Events',
     'nav.faq': 'FAQ',
-    'nav.blog': 'Blog',
     'nav.contact': 'Contact',
     'nav.alumni': 'Alumni',
     
@@ -59,9 +56,7 @@ const translations = {
     // Navigation
     'nav.about': 'Nosotros',
     'nav.team': 'Equipo',
-    'nav.events': 'Eventos',
     'nav.faq': 'Preguntas',
-    'nav.blog': 'Blog',
     'nav.contact': 'Contacto',
     'nav.alumni': 'Exalumnos',
     

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
@@ -17,9 +16,8 @@ const Header: React.FC = () => {
   const navigation = [
     { name: t('nav.about'), href: '/about' },
     { name: t('nav.team'), href: '/team' },
-    { name: t('nav.events'), href: '/events' },
+    { name: t('nav.alumni'), href: '/alumni' },
     { name: t('nav.faq'), href: '/faq' },
-    { name: t('nav.blog'), href: '/blog' },
   ];
 
   useEffect(() => {
@@ -35,12 +33,10 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
 
-  // Prevent scrolling when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -52,7 +48,6 @@ const Header: React.FC = () => {
     };
   }, [isMenuOpen]);
 
-  // Animations
   const mobileMenuVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: {
@@ -85,7 +80,6 @@ const Header: React.FC = () => {
       }`}
     >
       <div className="container-custom flex items-center justify-between">
-        {/* Logo with animation */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -100,7 +94,6 @@ const Header: React.FC = () => {
           </Link>
         </motion.div>
 
-        {/* Desktop Navigation */}
         <motion.nav 
           className="hidden md:flex items-center space-x-8"
           initial={{ opacity: 0, y: -10 }}
@@ -140,7 +133,6 @@ const Header: React.FC = () => {
           </motion.div>
         </motion.nav>
 
-        {/* Mobile Menu Toggle */}
         <motion.div 
           className="flex items-center md:hidden"
           initial={{ opacity: 0 }}
@@ -158,7 +150,6 @@ const Header: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Mobile Navigation Menu with enhanced animation */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div 
@@ -167,7 +158,7 @@ const Header: React.FC = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            style={{ paddingTop: isMobile ? '80px' : '96px' }} // Adjusting top padding to avoid header overlap
+            style={{ paddingTop: isMobile ? '80px' : '96px' }}
           >
             <div className="sticky top-6 right-6 flex justify-end">
               <button
