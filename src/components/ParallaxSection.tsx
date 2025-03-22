@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef, CSSProperties } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ParallaxElementProps {
   speed: number;
@@ -15,8 +16,11 @@ export const ParallaxElement: React.FC<ParallaxElementProps> = ({
   style = {}
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    if (isMobile) return; // Disable parallax on mobile
+    
     const handleScroll = () => {
       if (!elementRef.current) return;
       const scrollPosition = window.scrollY;
@@ -26,10 +30,14 @@ export const ParallaxElement: React.FC<ParallaxElementProps> = ({
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [speed]);
+  }, [speed, isMobile]);
 
   return (
-    <div ref={elementRef} className={`will-change-transform ${className}`} style={style}>
+    <div 
+      ref={elementRef} 
+      className={`relative ${isMobile ? '' : 'will-change-transform'} ${className}`} 
+      style={style}
+    >
       {children}
     </div>
   );
@@ -49,8 +57,11 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
   backgroundImage
 }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   
   useEffect(() => {
+    if (isMobile) return; // Disable parallax on mobile
+    
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const { top, height } = sectionRef.current.getBoundingClientRect();
@@ -63,7 +74,7 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
         scrollPosition + windowHeight >= offset &&
         scrollPosition <= offset + height
       ) {
-        const yPos = -(scrollPosition - offset) * 0.5;
+        const yPos = -(scrollPosition - offset) * 0.3; // Reduced speed for smoother effect
         if (sectionRef.current.querySelector('.parallax-bg')) {
           const bgElement = sectionRef.current.querySelector('.parallax-bg') as HTMLElement;
           bgElement.style.transform = `translate3d(0, ${yPos}px, 0)`;
@@ -75,7 +86,7 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
     handleScroll(); // Initial positioning
     
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMobile]);
 
   return (
     <div 
@@ -84,14 +95,16 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
     >
       {backgroundImage && (
         <div 
-          className="parallax-bg absolute inset-0 h-[120%] -top-[10%] w-full bg-cover bg-center will-change-transform"
+          className={`parallax-bg absolute inset-0 ${isMobile ? 'h-full' : 'h-[120%] -top-[10%]'} w-full bg-cover bg-center ${isMobile ? '' : 'will-change-transform'}`}
           style={{ backgroundImage: `url(${backgroundImage})` }}
         ></div>
       )}
-      <div 
-        className="absolute inset-0 bg-gradient-to-b from-latum-blue/0 via-latum-blue/20 to-latum-blue/40"
-        style={{ opacity: overlayOpacity }}
-      ></div>
+      {backgroundImage && (
+        <div 
+          className="absolute inset-0 bg-gradient-to-b from-latum-blue/0 via-latum-blue/20 to-latum-blue/40"
+          style={{ opacity: overlayOpacity }}
+        ></div>
+      )}
       <div className="relative z-10">{children}</div>
     </div>
   );
