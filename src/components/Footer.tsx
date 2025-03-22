@@ -127,9 +127,9 @@ const Footer: React.FC = () => {
                 <h3 className="text-sm font-accent text-gray-400">{t('contact.social')}</h3>
                 <div className="flex items-center space-x-4">
                   {[
-                    { icon: <Linkedin size={20} />, href: "https://www.linkedin.com", label: "LinkedIn" },
-                    { icon: <Instagram size={20} />, href: "https://www.instagram.com", label: "Instagram" },
-                    { icon: <ExternalLink size={20} />, href: "https://linktr.ee", label: "LinkTree" }
+                    { icon: <Linkedin size={20} />, href: "https://www.linkedin.com/company/latum/", label: "LinkedIn" },
+                    { icon: <Instagram size={20} />, href: "https://www.instagram.com/latum.club/", label: "Instagram" },
+                    { icon: <ExternalLink size={20} />, href: "https://linktr.ee/LA.TUM", label: "LinkTree" }
                   ].map((social, i) => (
                     <motion.a 
                       key={social.label}

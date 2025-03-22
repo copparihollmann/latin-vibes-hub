@@ -148,7 +148,7 @@ const Contact = () => {
                 </h3>
                 <div className="flex items-center space-x-6">
                   <a 
-                    href="https://www.linkedin.com" 
+                    href="https://www.linkedin.com/company/latum/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex items-center text-gray-800 hover:text-latum-blue transition-colors"
@@ -157,7 +157,7 @@ const Contact = () => {
                     <span>LinkedIn</span>
                   </a>
                   <a 
-                    href="https://www.instagram.com" 
+                    href="https://www.instagram.com/latum.club/" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex items-center text-gray-800 hover:text-latum-blue transition-colors"
@@ -166,7 +166,7 @@ const Contact = () => {
                     <span>Instagram</span>
                   </a>
                   <a 
-                    href="https://linktr.ee" 
+                    href="https://linktr.ee/LA.TUM" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex items-center text-gray-800 hover:text-latum-blue transition-colors"
