@@ -1,13 +1,15 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { Mail, Instagram, Linkedin, ExternalLink, Copy, Check } from 'lucide-react';
+import { Mail, Instagram, Linkedin, ExternalLink, Copy, Check, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const Contact = () => {
   const { t, language } = useLanguage();
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   // Form state
   const [formData, setFormData] = useState({
@@ -37,25 +39,55 @@ const Contact = () => {
     setTimeout(() => setCopied(false), 2000);
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the form submission to a backend
     
-    toast({
-      title: language === 'en' ? 'Message sent successfully!' : '¡Mensaje enviado con éxito!',
-      description: language === 'en'
-        ? 'We\'ll get back to you as soon as possible.'
-        : 'Nos pondremos en contacto contigo lo antes posible.',
-      duration: 3000,
-    });
+    // Validate form
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      toast({
+        title: language === 'en' ? 'Please fill all fields' : 'Por favor completa todos los campos',
+        duration: 3000,
+      });
+      return;
+    }
     
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
+    setIsSubmitting(true);
+    
+    try {
+      // Call the Supabase Edge Function to send the email
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData
+      });
+      
+      if (error) throw error;
+      
+      toast({
+        title: language === 'en' ? 'Message sent successfully!' : '¡Mensaje enviado con éxito!',
+        description: language === 'en'
+          ? 'We\'ll get back to you as soon as possible.'
+          : 'Nos pondremos en contacto contigo lo antes posible.',
+        duration: 5000,
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Error sending contact form:', error);
+      toast({
+        title: language === 'en' ? 'Error sending message' : 'Error al enviar el mensaje',
+        description: language === 'en'
+          ? 'Please try again later or contact us directly via email.'
+          : 'Por favor intenta de nuevo más tarde o contáctanos directamente por correo electrónico.',
+        duration: 5000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -234,8 +266,19 @@ const Contact = () => {
                     ></textarea>
                   </div>
                   
-                  <button type="submit" className="btn-primary w-full">
-                    {language === 'en' ? 'Send Message' : 'Enviar Mensaje'}
+                  <button 
+                    type="submit" 
+                    className="btn-primary w-full flex justify-center items-center"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        {language === 'en' ? 'Sending...' : 'Enviando...'}
+                      </>
+                    ) : (
+                      language === 'en' ? 'Send Message' : 'Enviar Mensaje'
+                    )}
                   </button>
                 </form>
               </div>
