@@ -243,35 +243,22 @@ const en = {
     subtitle: 'Get in touch with the LATUM team',
     connect: {
       title: 'Let\'s Connect',
-      description: 'Whether you have questions about LATUM, want to collaborate, or are interested in joining our community, we\'d love to hear from you.'
+      description: 'Have questions about LATUM? Want to attend our events? Interested in collaborating? We\'re here to help!'
     },
-    email: 'Email',
-    social: 'Social',
-    newsletter: 'Stay in Touch',
-    newsletter_placeholder: 'Enter your email address',
-    newsletter_button: 'Submit',
-    collaborations: 'Always open for collaborations!',
-    form: {
-      title: 'Send Us a Message',
-      name: 'Your Name',
-      email: 'Email Address',
-      subject: 'Subject',
-      subject_placeholder: '-- Select a subject --',
-      subject_options: {
-        membership: 'Membership Inquiry',
-        event: 'Event Information',
-        partnership: 'Partnership Opportunity',
-        volunteer: 'Volunteer Interest',
-        other: 'Other'
-      },
-      message: 'Message',
-      button: 'Send Message',
-      sending: 'Sending...',
-      success: 'Message sent successfully!',
-      success_description: 'We\'ll get back to you as soon as possible.',
-      error: 'Error sending message',
-      error_description: 'Please try again later or contact us directly via email.',
-      validation: 'Please fill all fields'
+    email: 'Email Us',
+    email_description: 'Drop us an email for inquiries, partnerships, or any questions about LATUM. We usually respond within 2-3 business days.',
+    email_copied: 'Email copied to clipboard!',
+    whatsapp: {
+      title: 'Join Our WhatsApp Community',
+      description: 'Connect with our super active WhatsApp group where members share events, opportunities, and build friendships!',
+      button: 'Access via LinkTree'
+    },
+    social: 'Social Media',
+    social_description: 'Follow us on social media to stay updated with our latest events, activities, and announcements.',
+    join: {
+      title: 'Want to Get Involved?',
+      description: 'Interested in becoming a part of LATUM? Follow us on Instagram to see when our next application period opens. We occasionally look for motivated team members to help run our community events!',
+      button: 'Follow us on Instagram'
     },
     location: {
       title: 'Find Us On Campus',

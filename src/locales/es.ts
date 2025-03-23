@@ -243,35 +243,22 @@ const es = {
     subtitle: 'Ponte en contacto con el equipo de LATUM',
     connect: {
       title: 'Conectémonos',
-      description: 'Ya sea que tengas preguntas sobre LATUM, quieras colaborar o estés interesado en unirte a nuestra comunidad, nos encantaría saber de ti.'
+      description: '¿Tienes preguntas sobre LATUM? ¿Quieres asistir a nuestros eventos? ¿Interesado en colaborar? ¡Estamos aquí para ayudarte!'
     },
-    email: 'Correo',
+    email: 'Envíanos un Correo',
+    email_description: 'Escríbenos un correo para consultas, colaboraciones o cualquier pregunta sobre LATUM. Normalmente respondemos en 2-3 días hábiles.',
+    email_copied: '¡Correo copiado al portapapeles!',
+    whatsapp: {
+      title: 'Únete a Nuestra Comunidad de WhatsApp',
+      description: '¡Conéctate con nuestro súper activo grupo de WhatsApp donde los miembros comparten eventos, oportunidades y construyen amistades!',
+      button: 'Acceder vía LinkTree'
+    },
     social: 'Redes Sociales',
-    newsletter: 'Mantente Conectado',
-    newsletter_placeholder: 'Ingresa tu correo electrónico',
-    newsletter_button: 'Enviar',
-    collaborations: '¡Siempre abiertos a colaboraciones!',
-    form: {
-      title: 'Envíanos un Mensaje',
-      name: 'Tu Nombre',
-      email: 'Correo Electrónico',
-      subject: 'Asunto',
-      subject_placeholder: '-- Selecciona un asunto --',
-      subject_options: {
-        membership: 'Consulta de Membresía',
-        event: 'Información de Eventos',
-        partnership: 'Oportunidad de Colaboración',
-        volunteer: 'Interés en Voluntariado',
-        other: 'Otro'
-      },
-      message: 'Mensaje',
-      button: 'Enviar Mensaje',
-      sending: 'Enviando...',
-      success: '¡Mensaje enviado con éxito!',
-      success_description: 'Nos pondremos en contacto contigo lo antes posible.',
-      error: 'Error al enviar el mensaje',
-      error_description: 'Por favor intenta de nuevo más tarde o contáctanos directamente por correo electrónico.',
-      validation: 'Por favor completa todos los campos'
+    social_description: 'Síguenos en redes sociales para mantenerte actualizado con nuestros últimos eventos, actividades y anuncios.',
+    join: {
+      title: '¿Quieres Involucrarte?',
+      description: '¿Interesado en formar parte de LATUM? Síguenos en Instagram para ver cuándo abre nuestro próximo período de solicitudes. ¡Ocasionalmente buscamos miembros motivados para ayudar a organizar nuestros eventos comunitarios!',
+      button: 'Síguenos en Instagram'
     },
     location: {
       title: 'Encuéntranos en el Campus',

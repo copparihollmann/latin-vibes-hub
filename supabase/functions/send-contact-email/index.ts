@@ -10,11 +10,10 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-interface ContactFormData {
-  name: string;
-  email: string;
+interface EmailData {
+  to: string;
   subject: string;
-  message: string;
+  html: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -24,10 +23,10 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const formData: ContactFormData = await req.json();
-    const { name, email, subject, message } = formData;
+    const emailData: EmailData = await req.json();
+    const { to, subject, html } = emailData;
 
-    if (!name || !email || !subject || !message) {
+    if (!to || !subject || !html) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
         {
@@ -37,49 +36,25 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log("Sending contact form email from:", email);
+    console.log("Sending email to:", to);
 
-    // Send email to LATUM
-    const emailToLatum = await resend.emails.send({
-      from: "LATUM Contact Form <onboarding@resend.dev>",
-      to: ["info.latum@gmail.com"],  // Your Gmail address
-      subject: `New Contact Form Submission: ${subject}`,
-      html: `
-        <h1>New Contact Form Submission</h1>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <h2>Message:</h2>
-        <p>${message.replace(/\n/g, "<br>")}</p>
-      `,
-    });
-
-    // Send confirmation email to the user
-    const confirmationEmail = await resend.emails.send({
+    // Send email using Resend
+    const { data, error } = await resend.emails.send({
       from: "LATUM <onboarding@resend.dev>",
-      to: [email],
-      subject: "We've received your message - LATUM",
-      html: `
-        <h1>Thank you for contacting LATUM!</h1>
-        <p>Dear ${name},</p>
-        <p>We have received your message and will get back to you as soon as possible.</p>
-        <p>Here's a copy of your message:</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong><br>${message.replace(/\n/g, "<br>")}</p>
-        <p>Best regards,<br>The LATUM Team</p>
-      `,
+      to: [to],
+      subject: subject,
+      html: html,
     });
 
-    console.log("Email sent successfully:", emailToLatum);
+    if (error) {
+      throw error;
+    }
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Emails sent successfully",
-        ids: {
-          main: emailToLatum.id,
-          confirmation: confirmationEmail.id
-        }
+        message: "Email sent successfully",
+        id: data?.id
       }),
       {
         status: 200,
