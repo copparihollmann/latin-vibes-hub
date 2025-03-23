@@ -5,7 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Instagram, Linkedin, ExternalLink, MessageCircle, Calendar } from 'lucide-react';
 
 const Index = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
   const [scrollY, setScrollY] = useState(0);
   const missionRef = useRef<HTMLDivElement>(null);
@@ -122,7 +122,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Events Highlight Section - NEW */}
+      {/* Events Highlight Section */}
       <section className="py-16 bg-gradient-to-r from-latum-blue to-latum-blue/80 text-white">
         <div className="container-custom">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">

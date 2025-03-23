@@ -1,4 +1,3 @@
-
 // English translations for LATUM website
 // This file contains all English text except for Alumni and Team pages
 
@@ -22,8 +21,10 @@ const en = {
       cta: 'Learn More'
     },
     mission: {
-      title: 'Our Mission',
-      text: 'We aim to create a vibrant community for Latin American students and those interested in Latin American culture at the Technical University of Munich.'
+      tag: 'Our Mission',
+      heading: 'Connecting cultures, creating community',
+      description: 'We aim to create a vibrant community for Latin American students and those interested in Latin American culture at the Technical University of Munich.',
+      cta: 'Discover Our Story'
     },
     stayUpdated: {
       title: 'Stay Updated',
