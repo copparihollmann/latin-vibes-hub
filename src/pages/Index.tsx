@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import HeroSection from '@/components/HeroSection';
@@ -85,20 +84,20 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-8 animate-fade-in" style={getMissionTransform()}>
               <div className="inline-block px-3 py-1 rounded-full bg-latum-blue/10 text-latum-blue text-sm font-medium">
-                {t('home.mission.title')}
+                {t('home.mission.tag')}
               </div>
               
               <h2 className="text-4xl md:text-5xl font-display font-bold">
-                {t('home.mission.text')}
+                {t('home.mission.heading')}
               </h2>
               
               <p className="text-lg text-gray-700">
-                {t('home.mission.text')}
+                {t('home.mission.description')}
               </p>
               
               <div>
                 <a href="/about" className="btn-primary">
-                  {t('home.hero.cta')}
+                  {t('home.mission.cta')}
                 </a>
               </div>
             </div>
