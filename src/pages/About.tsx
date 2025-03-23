@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
@@ -7,16 +8,16 @@ const About = () => {
   const { t } = useLanguage();
   const valuesRef = useRef<HTMLDivElement>(null);
 
-  // Static co-founders data
+  // Static co-founders data with reordered list (Alonso before Agustin)
   const founders = [
-    {
-      name: "Agustin Nahuel Coppari Hollmann",
-      country: "Argentina",
-      image: null
-    },
     {
       name: "Alonso Miguel Zapata Rojas",
       country: "Peru",
+      image: null
+    },
+    {
+      name: "Agustin Nahuel Coppari Hollmann",
+      country: "Argentina",
       image: null
     },
     {
@@ -120,14 +121,14 @@ const About = () => {
                   </p>
                 </motion.div>
 
-                {/* Founders Section (Updated) */}
+                {/* Founders Section (Updated with new title) */}
                 <motion.div 
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.15, duration: 0.5 }}
                   className="p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 shadow-md border border-gray-100"
                 >
-                  <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">{t('about.founders.title')}</h3>
+                  <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">LATUM e.V. Co-founders</h3>
                   <div className="space-y-3">
                     {founders.map((founder, index) => (
                       <div key={index}>
