@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import HeroSection from '@/components/HeroSection';
@@ -162,13 +161,6 @@ const Index = () => {
       <section className="section-padding bg-gray-50 relative" ref={activitiesRef}>
         <div className="container-custom relative z-10" style={getActivitiesTransform()}>
           <div className="text-center mb-12">
-            <div className="flex justify-center mb-6">
-              <img
-                src="/lovable-uploads/4e71b068-b82d-4ed1-9db6-55ed87c301e0.png"
-                alt="LATUM Logo"
-                className="h-16 w-auto mb-4"
-              />
-            </div>
             <h2 className="text-4xl font-display font-bold mb-6">{t('home.whatWeDo.title')}</h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               {t('home.whatWeDo.description')}
@@ -205,11 +197,6 @@ const Index = () => {
           <div className="bg-latum-accent/10 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1 space-y-4">
               <div className="flex items-center gap-3 mb-4">
-                <img
-                  src="/lovable-uploads/4e71b068-b82d-4ed1-9db6-55ed87c301e0.png"
-                  alt="LATUM Logo"
-                  className="h-10 w-auto"
-                />
                 <h3 className="text-3xl font-display font-bold text-latum-blue">{t('home.whatsapp.title')}</h3>
               </div>
               <p className="text-lg">
@@ -240,13 +227,6 @@ const Index = () => {
         ></div>
         <div className="container-custom relative z-10" style={getSocialTransform()}>
           <div className="max-w-4xl mx-auto text-center">
-            <div className="flex justify-center mb-6">
-              <img
-                src="/lovable-uploads/4e71b068-b82d-4ed1-9db6-55ed87c301e0.png"
-                alt="LATUM Logo"
-                className="h-14 w-auto mb-2"
-              />
-            </div>
             <h2 className="text-3xl font-display font-bold mb-8">{t('home.social.title')}</h2>
             <p className="text-xl mb-4">
               {t('home.social.description')}
@@ -318,13 +298,6 @@ const Index = () => {
         ></div>
         <div className="container-custom relative z-10" style={getCommunityTransform()}>
           <div className="max-w-4xl mx-auto text-center">
-            <div className="flex justify-center mb-8">
-              <img
-                src="/lovable-uploads/39741899-8c2b-417e-8421-5aa51256d8e3.png"
-                alt="LATUM Logo"
-                className="h-20 w-auto"
-              />
-            </div>
             <h2 className="text-4xl font-display font-bold mb-8">{t('home.community.title')}</h2>
             <p className="text-xl mb-10">
               {t('home.community.description')}
