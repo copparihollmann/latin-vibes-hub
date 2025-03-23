@@ -114,8 +114,6 @@ const Index = () => {
                 alt="LATUM Community" 
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              
-              <div className="absolute inset-0 bg-latum-blue/30 mix-blend-multiply"></div>
             </div>
           </div>
         </div>
