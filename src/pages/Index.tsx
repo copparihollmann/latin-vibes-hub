@@ -110,20 +110,12 @@ const Index = () => {
               }}
             >
               <img 
-                src="/lovable-uploads/868091dc-c821-4c4a-b916-10885ebb36ff.png" 
-                alt="LATUM Mission" 
+                src="/lovable-uploads/32871067-2e28-4054-889a-a8bc95263670.png" 
+                alt="LATUM Community" 
                 className="absolute inset-0 w-full h-full object-cover"
               />
               
-              <div className="absolute inset-0 bg-latum-blue/40 mix-blend-multiply"></div>
-              
-              <div className="absolute inset-0 flex items-center justify-center z-10">
-                <img 
-                  src="/lovable-uploads/39741899-8c2b-417e-8421-5aa51256d8e3.png" 
-                  alt="LATUM Logo" 
-                  className="w-2/3 h-auto"
-                />
-              </div>
+              <div className="absolute inset-0 bg-latum-blue/30 mix-blend-multiply"></div>
             </div>
           </div>
         </div>
