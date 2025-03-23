@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { ChevronDown } from 'lucide-react';
@@ -307,7 +306,7 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-0">
       {/* Background Layer */}
       <div 
         className="absolute inset-0 bg-gradient-to-br from-latum-blue via-latum-blue to-latum-blue/80"
@@ -334,44 +333,44 @@ const HeroSection: React.FC = () => {
       {/* Hero Content - added ref to control text animation */}
       <motion.div 
         ref={heroRef}
-        className="container-custom relative z-10 text-white space-y-6 mt-16 will-change-transform"
+        className="container-custom relative z-10 text-white space-y-6 px-4 md:px-6 lg:px-8 will-change-transform"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         <div ref={textRef} className="max-w-4xl mx-auto text-center will-change-transform">
-          <motion.div variants={itemVariants} className="flex justify-center mb-6">
+          <motion.div variants={itemVariants} className="flex justify-center mb-4 md:mb-6">
             <img
               src="/lovable-uploads/39741899-8c2b-417e-8421-5aa51256d8e3.png"
               alt="LATUM Logo"
-              className="w-48 h-48 object-contain mb-2"
+              className="w-32 h-32 md:w-48 md:h-48 object-contain"
             />
           </motion.div>
           
           <motion.div 
             variants={itemVariants}
-            className="inline-block px-4 py-1 mb-4 bg-white/10 backdrop-blur-sm rounded-full"
+            className="inline-block px-3 py-1 mb-3 md:px-4 md:py-1 md:mb-4 bg-white/10 backdrop-blur-sm rounded-full"
           >
-            <span className="text-sm font-accent font-medium">Est. 2023</span>
+            <span className="text-xs md:text-sm font-accent font-medium">Est. 2023</span>
           </motion.div>
           
           <motion.h1 
             variants={itemVariants}
-            className="text-5xl md:text-7xl font-display font-bold mb-6 leading-tight will-change-transform"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-bold mb-3 md:mb-6 leading-tight will-change-transform"
           >
             {t('home.hero.title')}
           </motion.h1>
           
           <motion.p 
             variants={itemVariants}
-            className="text-xl md:text-2xl font-light max-w-3xl mx-auto will-change-transform"
+            className="text-lg sm:text-xl md:text-2xl font-light max-w-3xl mx-auto will-change-transform mb-4 md:mb-0"
           >
             {t('home.hero.subtitle')}
           </motion.p>
           
           <motion.div 
             variants={itemVariants}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="mt-6 md:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a 
               href="#mission" 
@@ -404,7 +403,7 @@ const HeroSection: React.FC = () => {
       
       {/* Scroll Down Indicator */}
       <motion.div 
-        className="absolute left-0 right-0 bottom-10 mx-auto flex justify-center items-center"
+        className="absolute left-0 right-0 bottom-6 md:bottom-10 mx-auto flex justify-center items-center"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
@@ -415,13 +414,13 @@ const HeroSection: React.FC = () => {
           className="flex flex-col items-center text-white"
           aria-label="Scroll down"
         >
-          <span className="text-sm font-medium mb-2 opacity-80">Discover More</span>
+          <span className="text-xs md:text-sm font-medium mb-1 md:mb-2 opacity-80">Discover More</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
             className="flex justify-center"
           >
-            <ChevronDown size={28} />
+            <ChevronDown size={24} className="md:w-7 md:h-7" />
           </motion.div>
         </button>
       </motion.div>
