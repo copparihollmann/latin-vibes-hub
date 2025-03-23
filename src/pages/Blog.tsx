@@ -143,34 +143,6 @@ const Blog = () => {
               </article>
             ))}
           </div>
-          
-          {/* Newsletter Section */}
-          <div className="mt-20 bg-gray-50 rounded-xl p-8 md:p-12">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 text-center">
-                {language === 'en' ? 'Subscribe to Our Newsletter' : 'Suscríbete a Nuestro Boletín'}
-              </h2>
-              <p className="text-gray-700 text-center mb-6">
-                {language === 'en'
-                  ? 'Get the latest blog posts, event announcements, and news delivered to your inbox.'
-                  : 'Recibe las últimas publicaciones del blog, anuncios de eventos y noticias en tu bandeja de entrada.'}
-              </p>
-              
-              <form className="max-w-lg mx-auto">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <input
-                    type="email"
-                    placeholder={language === 'en' ? 'Your email address' : 'Tu dirección de correo electrónico'}
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-latum-blue"
-                    required
-                  />
-                  <button type="submit" className="btn-primary whitespace-nowrap">
-                    {language === 'en' ? 'Subscribe' : 'Suscribirse'}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
         </div>
       </section>
     </div>

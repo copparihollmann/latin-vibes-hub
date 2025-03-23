@@ -9,7 +9,6 @@ import { motion } from 'framer-motion';
 const Footer: React.FC = () => {
   const { t } = useLanguage();
   const { toast } = useToast();
-  const [email, setEmail] = useState('');
   const [copied, setCopied] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const footerRef = React.useRef<HTMLElement>(null);
@@ -39,17 +38,6 @@ const Footer: React.FC = () => {
     });
     
     setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would typically handle the newsletter subscription
-    toast({
-      title: 'Thank you for subscribing!',
-      description: 'We\'ll keep you updated with our latest news and events.',
-      duration: 3000,
-    });
-    setEmail('');
   };
 
   // Animation variants
@@ -96,13 +84,13 @@ const Footer: React.FC = () => {
           ></div>
           
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10"
+            className="relative z-10"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            {/* Left Column */}
+            {/* Contact Information */}
             <motion.div className="space-y-8" variants={itemVariants}>
               <h2 className="text-4xl font-display font-bold relative inline-block">
                 {t('contact.collaborations')}
@@ -151,34 +139,6 @@ const Footer: React.FC = () => {
                   ))}
                 </div>
               </div>
-            </motion.div>
-            
-            {/* Right Column */}
-            <motion.div className="space-y-8" variants={itemVariants}>
-              <h3 className="text-2xl font-display relative inline-block">
-                {t('contact.newsletter')}
-                <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-latum-accent/70 rounded-full"></span>
-              </h3>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex overflow-hidden rounded-md shadow-lg">
-                  <input 
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t('contact.newsletter.placeholder')}
-                    className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-l-md text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300"
-                    required
-                  />
-                  <button 
-                    type="submit" 
-                    className="bg-white text-latum-dark px-6 py-3 font-medium rounded-r-md hover:bg-gray-100 transition-all duration-300 overflow-hidden relative group"
-                  >
-                    <span className="relative z-10">{t('contact.newsletter.button')}</span>
-                    <span className="absolute inset-0 bg-latum-accent scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300"></span>
-                  </button>
-                </div>
-              </form>
             </motion.div>
           </motion.div>
           

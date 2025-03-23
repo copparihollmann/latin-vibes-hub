@@ -1,3 +1,4 @@
+
 // English translations for LATUM website
 // This file contains all English text except for Alumni and Team pages
 
@@ -228,13 +229,7 @@ const en = {
   blog: {
     title: 'LATUM Blog',
     subtitle: 'Insights, stories, and resources for the Latin American community at TUM',
-    readMore: 'Read more',
-    newsletter: {
-      title: 'Subscribe to Our Newsletter',
-      description: 'Get the latest blog posts, event announcements, and news delivered to your inbox.',
-      placeholder: 'Your email address',
-      button: 'Subscribe'
-    }
+    readMore: 'Read more'
   },
   
   // Contact Page
