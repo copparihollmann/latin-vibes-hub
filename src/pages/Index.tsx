@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import HeroSection from '@/components/HeroSection';
@@ -109,12 +110,18 @@ const Index = () => {
                 transform: `translateY(${scrollY * 0.04}px)` 
               }}
             >
-              <div className="absolute inset-0 dot-pattern opacity-10 z-10"></div>
+              {/* Replace the dot pattern with the community image */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center z-10 opacity-90"
+                style={{ backgroundImage: `url('/lovable-uploads/821975ce-5b31-4614-8745-9d0b28b75730.png')` }}
+              ></div>
+              <div className="absolute inset-0 bg-latum-blue/70 z-10 mix-blend-multiply"></div>
+              
               <div className="bg-latum-blue h-full w-full flex items-center justify-center">
                 <img 
                   src="/lovable-uploads/39741899-8c2b-417e-8421-5aa51256d8e3.png" 
                   alt="LATUM Logo" 
-                  className="w-3/4 h-auto"
+                  className="w-3/4 h-auto z-20 relative"
                 />
               </div>
             </div>
