@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const FAQ = () => {
   const { t } = useLanguage();
@@ -18,18 +18,52 @@ const FAQ = () => {
     );
   };
 
+  // Smoother animations with framer-motion
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <div className="pt-16">
       {/* Hero Section */}
       <section className="bg-latum-blue text-white py-20 md:py-32">
         <div className="container-custom">
           <div className="max-w-3xl">
-            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 animate-fade-in">
+            <motion.h1 
+              className="text-5xl md:text-6xl font-display font-bold mb-6"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
               {t('faq.title')}
-            </h1>
-            <p className="text-xl md:text-2xl animate-fade-in" style={{ animationDelay: '100ms' }}>
+            </motion.h1>
+            <motion.p 
+              className="text-xl md:text-2xl"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            >
               {t('faq.description')}
-            </p>
+            </motion.p>
           </div>
         </div>
       </section>
@@ -37,12 +71,17 @@ const FAQ = () => {
       {/* FAQ Section */}
       <section className="py-16 md:py-24">
         <div className="container-custom max-w-4xl">
-          <div className="space-y-6">
+          <motion.div 
+            className="space-y-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {t('faq.items', { returnObjects: true }).map((item: any, index: number) => (
-              <div 
+              <motion.div 
                 key={index}
-                className="border border-gray-200 rounded-lg overflow-hidden animate-fade-in"
-                style={{ animationDelay: `${index * 50}ms` }}
+                className="border border-gray-200 rounded-lg overflow-hidden"
+                variants={itemVariants}
               >
                 <button
                   className="w-full flex items-center justify-between p-6 text-left bg-white hover:bg-gray-50 transition-colors"
@@ -57,22 +96,30 @@ const FAQ = () => {
                   )}
                 </button>
                 
-                {expandedItems.includes(index) && (
-                  <div className="p-6 pt-0 bg-white">
-                    <p className="text-gray-700">{item.answer}</p>
-                  </div>
-                )}
-              </div>
+                <AnimatePresence>
+                  {expandedItems.includes(index) && (
+                    <motion.div 
+                      className="p-6 pt-0 bg-white"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                      <p className="text-gray-700">{item.answer}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
           
           {/* Contact CTA */}
           <motion.div 
             className="mt-16 text-center p-8 bg-gray-50 rounded-xl"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h3 className="text-2xl font-display font-bold mb-4">{t('faq.more.title')}</h3>
             <p className="text-gray-700 mb-6">
