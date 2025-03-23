@@ -1,23 +1,18 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Globe } from 'lucide-react';
 
 const LanguageToggle: React.FC = () => {
   const { language, setLanguage, isTranslatablePage } = useLanguage();
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'es' : 'en');
-  };
-
-  // Don't render anything if the current page isn't translatable
   if (!isTranslatablePage) {
     return null;
   }
 
   return (
     <button 
-      onClick={toggleLanguage}
+      onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
       className="flex items-center space-x-1 text-sm font-medium transition-colors duration-200 hover:text-latum-blue"
       aria-label={language === 'en' ? 'Switch to Spanish' : 'Switch to English'}
     >
@@ -27,4 +22,4 @@ const LanguageToggle: React.FC = () => {
   );
 };
 
-export default LanguageToggle;
+export default memo(LanguageToggle);

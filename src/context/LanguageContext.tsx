@@ -1,5 +1,5 @@
 
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import en from '../locales/en';
 import es from '../locales/es';
@@ -21,7 +21,10 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   const location = useLocation();
   
   // Check if current page should be translatable
-  const isTranslatablePage = translatablePages.includes(location.pathname);
+  const isTranslatablePage = useMemo(() => 
+    translatablePages.includes(location.pathname), 
+    [location.pathname]
+  );
 
   // Function to get nested values from translation objects using dot notation
   const t = (key: string, options?: { returnObjects?: boolean }): any => {
@@ -56,8 +59,15 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
   };
 
+  const contextValue = useMemo(() => ({
+    language,
+    setLanguage,
+    t,
+    isTranslatablePage,
+  }), [language, isTranslatablePage]);
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, isTranslatablePage }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );
