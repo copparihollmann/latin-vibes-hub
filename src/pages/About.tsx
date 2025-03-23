@@ -3,10 +3,35 @@ import React, { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { motion } from 'framer-motion';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const About = () => {
   const { t } = useLanguage();
   const valuesRef = useRef<HTMLDivElement>(null);
+
+  // Static co-founders data
+  const founders = [
+    {
+      name: "Agustin Nahuel Coppari Hollmann",
+      country: "Argentina",
+      image: null
+    },
+    {
+      name: "Alonso Miguel Zapata Rojas",
+      country: "Peru",
+      image: null
+    },
+    {
+      name: "Juanita Beltran Bayona",
+      country: "Colombia",
+      image: null
+    },
+    {
+      name: "Maria Jose Rodriguez Velazquez",
+      country: "Colombia",
+      image: null
+    }
+  ];
 
   // Parallax and scroll animations
   useEffect(() => {
@@ -96,6 +121,32 @@ const About = () => {
                   <p className="text-gray-700">
                     {t('about.visionText')}
                   </p>
+                </motion.div>
+
+                {/* Founders Section (New) */}
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15, duration: 0.5 }}
+                  className="p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 shadow-md border border-gray-100"
+                >
+                  <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">{t('about.founders.title')}</h3>
+                  <div className="space-y-4">
+                    {founders.map((founder, index) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <Avatar className="h-10 w-10 border border-gray-200">
+                          <AvatarImage src={founder.image || ''} alt={founder.name} />
+                          <AvatarFallback className="bg-latum-blue/10 text-latum-blue font-medium">
+                            {founder.name.split(' ').map(name => name[0]).join('').slice(0, 2)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium text-gray-800">{founder.name}</p>
+                          <p className="text-xs text-gray-500">{founder.country}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </motion.div>
                 
                 <motion.div 
