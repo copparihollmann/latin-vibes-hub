@@ -5,7 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 const NotFound = () => {
   const location = useLocation();
-  const { language } = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
     console.error(
@@ -22,17 +22,15 @@ const NotFound = () => {
         </div>
         
         <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">
-          {language === 'en' ? 'Page Not Found' : 'Página No Encontrada'}
+          {t('notFound.title')}
         </h1>
         
         <p className="text-xl text-gray-700 mb-8">
-          {language === 'en'
-            ? 'The page you are looking for doesn\'t exist or has been moved.'
-            : 'La página que estás buscando no existe o ha sido movida.'}
+          {t('notFound.description')}
         </p>
         
         <a href="/" className="btn-primary inline-block">
-          {language === 'en' ? 'Back to Home' : 'Volver al Inicio'}
+          {t('notFound.button')}
         </a>
       </div>
     </div>
