@@ -1,9 +1,7 @@
-
 import React, { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { motion } from 'framer-motion';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const About = () => {
   const { t } = useLanguage();
@@ -28,7 +26,7 @@ const About = () => {
     },
     {
       name: "Maria Jose Rodriguez Velazquez",
-      country: "Colombia",
+      country: "Mexico",
       image: null
     }
   ];
@@ -45,7 +43,6 @@ const About = () => {
           const rect = element.getBoundingClientRect();
           if (rect.top < viewportHeight * 0.85) {
             element.classList.add('animate-fade-in-up');
-            // Fix TypeScript error by properly casting the element to HTMLElement
             (element as HTMLElement).style.animationDelay = `${index * 100}ms`;
           }
         });
@@ -123,7 +120,7 @@ const About = () => {
                   </p>
                 </motion.div>
 
-                {/* Founders Section (New) */}
+                {/* Founders Section (Updated) */}
                 <motion.div 
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -131,19 +128,11 @@ const About = () => {
                   className="p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 shadow-md border border-gray-100"
                 >
                   <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">{t('about.founders.title')}</h3>
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     {founders.map((founder, index) => (
-                      <div key={index} className="flex items-center gap-3">
-                        <Avatar className="h-10 w-10 border border-gray-200">
-                          <AvatarImage src={founder.image || ''} alt={founder.name} />
-                          <AvatarFallback className="bg-latum-blue/10 text-latum-blue font-medium">
-                            {founder.name.split(' ').map(name => name[0]).join('').slice(0, 2)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="text-sm font-medium text-gray-800">{founder.name}</p>
-                          <p className="text-xs text-gray-500">{founder.country}</p>
-                        </div>
+                      <div key={index}>
+                        <p className="font-medium text-gray-800">{founder.name}</p>
+                        <p className="text-sm text-gray-500">{founder.country}</p>
                       </div>
                     ))}
                   </div>
