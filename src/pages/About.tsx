@@ -163,12 +163,14 @@ const About = () => {
                       </p>
                     </div>
                     <div className="aspect-auto bg-gradient-to-br from-latum-light to-white overflow-hidden flex items-center justify-center">
-                      <div className="w-full h-full p-8 flex items-center justify-center">
-                        <div className="relative w-full max-w-sm h-64 bg-latum-blue/10 rounded-lg overflow-hidden group shadow-md transition-all duration-300 hover:shadow-xl">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-latum-blue font-medium">Co-founders Image</span>
-                          </div>
-                          <div className="absolute inset-0 bg-gradient-to-t from-latum-blue/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                      <div className="w-full h-full p-4 flex items-center justify-center">
+                        <div className="relative w-full h-64 overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-xl">
+                          <img 
+                            src="/lovable-uploads/3c1de57e-8bec-4ca7-b8ff-9792d3c1f90d.png" 
+                            alt="LATUM Co-founders"
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-latum-blue/80 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
                             <div className="p-4 text-white">
                               <p className="font-medium">Founders of LATUM e.V.</p>
                               <p className="text-sm opacity-80">Established 2023</p>
