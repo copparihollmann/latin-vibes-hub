@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import HeroSection from '@/components/HeroSection';
@@ -110,18 +109,19 @@ const Index = () => {
                 transform: `translateY(${scrollY * 0.04}px)` 
               }}
             >
-              {/* Replace the dot pattern with the community image */}
-              <div 
-                className="absolute inset-0 bg-cover bg-center z-10 opacity-90"
-                style={{ backgroundImage: `url('/lovable-uploads/821975ce-5b31-4614-8745-9d0b28b75730.png')` }}
-              ></div>
-              <div className="absolute inset-0 bg-latum-blue/70 z-10 mix-blend-multiply"></div>
+              <img 
+                src="/lovable-uploads/868091dc-c821-4c4a-b916-10885ebb36ff.png" 
+                alt="LATUM Mission" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
               
-              <div className="bg-latum-blue h-full w-full flex items-center justify-center">
+              <div className="absolute inset-0 bg-latum-blue/40 mix-blend-multiply"></div>
+              
+              <div className="absolute inset-0 flex items-center justify-center z-10">
                 <img 
                   src="/lovable-uploads/39741899-8c2b-417e-8421-5aa51256d8e3.png" 
                   alt="LATUM Logo" 
-                  className="w-3/4 h-auto z-20 relative"
+                  className="w-2/3 h-auto"
                 />
               </div>
             </div>
