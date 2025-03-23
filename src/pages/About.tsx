@@ -92,9 +92,9 @@ const About = () => {
                   transition={{ duration: 0.5 }}
                   className="p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 shadow-md border border-gray-100"
                 >
-                  <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">Our Vision</h3>
+                  <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">{t('about.vision')}</h3>
                   <p className="text-gray-700">
-                    To create a home away from home for Latin American students and foster cultural exchange at TUM.
+                    {t('about.visionText')}
                   </p>
                 </motion.div>
                 
@@ -104,8 +104,8 @@ const About = () => {
                   transition={{ delay: 0.2, duration: 0.5 }}
                   className="p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 shadow-md border border-gray-100"
                 >
-                  <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">Founded</h3>
-                  <p className="text-gray-700">2023</p>
+                  <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">{t('about.founded')}</h3>
+                  <p className="text-gray-700">{t('about.foundedYear')}</p>
                 </motion.div>
                 
                 <motion.div 
@@ -114,8 +114,8 @@ const About = () => {
                   transition={{ delay: 0.4, duration: 0.5 }}
                   className="p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 shadow-md border border-gray-100"
                 >
-                  <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">Location</h3>
-                  <p className="text-gray-700">Technical University of Munich, Germany</p>
+                  <h3 className="text-2xl font-display font-bold mb-4 text-latum-blue">{t('about.location')}</h3>
+                  <p className="text-gray-700">{t('about.locationText')}</p>
                 </motion.div>
               </div>
             </div>
@@ -129,14 +129,14 @@ const About = () => {
                 transition={{ duration: 0.6 }}
               >
                 <h2 className="text-3xl font-display font-bold text-latum-blue relative inline-block">
-                  Our Story
+                  {t('about.story.title')}
                   <span className="absolute -bottom-2 left-0 w-full h-1 bg-latum-accent rounded-full"></span>
                 </h2>
                 <p className="text-lg text-gray-700">
-                  LATUM e.V. was founded in 2023 by a group of passionate Latin American students at the Technical University of Munich who recognized the need for a community that could support newcomers and celebrate Latin American culture.
+                  {t('about.story.p1')}
                 </p>
                 <p className="text-lg text-gray-700">
-                  What started as informal gatherings quickly grew into a structured organization with a clear mission: to bridge cultural gaps and foster an inclusive environment at TUM.
+                  {t('about.story.p2')}
                 </p>
               </motion.div>
               
@@ -148,7 +148,7 @@ const About = () => {
                 transition={{ delay: 0.2, duration: 0.6 }}
               >
                 <h2 className="text-3xl font-display font-bold text-latum-blue relative inline-block">
-                  Our Co-founders
+                  {t('about.founders.title')}
                   <span className="absolute -bottom-2 left-0 w-full h-1 bg-latum-accent rounded-full"></span>
                 </h2>
                 <div className="rounded-xl overflow-hidden shadow-lg">
@@ -159,7 +159,7 @@ const About = () => {
                         {t('about.founders.description')}
                       </p>
                       <p className="italic border-l-4 border-white/30 pl-4">
-                        "Our vision was to create a space where Latin American students could find community, support and a sense of belonging while studying abroad at TUM."
+                        {t('about.founders.quote')}
                       </p>
                     </div>
                     <div className="aspect-auto bg-gradient-to-br from-latum-light to-white overflow-hidden flex items-center justify-center">
@@ -188,17 +188,17 @@ const About = () => {
                 transition={{ delay: 0.3, duration: 0.6 }}
               >
                 <h2 className="text-3xl font-display font-bold text-latum-blue relative inline-block">
-                  What We Do
+                  {t('about.whatWeDo.title')}
                   <span className="absolute -bottom-2 left-0 w-full h-1 bg-latum-accent rounded-full"></span>
                 </h2>
                 <p className="text-lg text-gray-700">
-                  Our activities are centered around three core pillars:
+                  {t('about.whatWeDo.description')}
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {['Community Building', 'Cultural Exchange', 'Academic Support'].map((title, i) => (
+                  {t('about.whatWeDo.pillars', { returnObjects: true }).map((pillar: any, i: number) => (
                     <motion.div 
-                      key={title}
+                      key={pillar.title}
                       custom={i}
                       initial="hidden"
                       whileInView="visible"
@@ -209,15 +209,8 @@ const About = () => {
                       <div className="h-full bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                         <div className="h-3 bg-latum-blue"></div>
                         <div className="p-6">
-                          <h3 className="text-xl font-display font-bold mb-3 text-gray-800">{title}</h3>
-                          <p className="text-gray-700">
-                            {title === 'Community Building' && 
-                              'Regular social events, language exchanges, and networking opportunities to connect students.'}
-                            {title === 'Cultural Exchange' && 
-                              'Workshops, festivals, and presentations that showcase the rich diversity of Latin American cultures.'}
-                            {title === 'Academic Support' && 
-                              'Mentoring, study groups, and resources to help Latin American students thrive academically.'}
-                          </p>
+                          <h3 className="text-xl font-display font-bold mb-3 text-gray-800">{pillar.title}</h3>
+                          <p className="text-gray-700">{pillar.description}</p>
                         </div>
                       </div>
                     </motion.div>
@@ -233,16 +226,11 @@ const About = () => {
                 transition={{ delay: 0.4, duration: 0.6 }}
               >
                 <h2 className="text-3xl font-display font-bold text-latum-blue relative inline-block">
-                  Our Values
+                  {t('about.values.title')}
                   <span className="absolute -bottom-2 left-0 w-full h-1 bg-latum-accent rounded-full"></span>
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[
-                    { name: 'Inclusion', desc: 'Creating a welcoming space for everyone interested in Latin American culture.' },
-                    { name: 'Diversity', desc: 'Celebrating the rich variety of cultures, languages, and traditions across Latin America.' },
-                    { name: 'Connection', desc: 'Building meaningful relationships and networks that last beyond university.' },
-                    { name: 'Support', desc: 'Providing resources and assistance to help students succeed academically and personally.' }
-                  ].map((value, i) => (
+                  {t('about.values.list', { returnObjects: true }).map((value: any, i: number) => (
                     <div key={value.name} className="value-item opacity-0">
                       <HoverCard>
                         <HoverCardTrigger asChild>
@@ -283,15 +271,15 @@ const About = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
         >
-          <h2 className="text-3xl font-display font-bold mb-6 text-latum-blue">Want to Get Involved?</h2>
+          <h2 className="text-3xl font-display font-bold mb-6 text-latum-blue">{t('about.cta.title')}</h2>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-8">
-            Whether you're from Latin America or simply interested in the culture, we welcome you to join our community.
+            {t('about.cta.description')}
           </p>
           <a 
             href="/contact" 
             className="btn-primary inline-block relative overflow-hidden group"
           >
-            <span className="relative z-10">Contact Us</span>
+            <span className="relative z-10">{t('about.cta.button')}</span>
             <span className="absolute inset-0 bg-latum-accent scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
           </a>
         </motion.div>

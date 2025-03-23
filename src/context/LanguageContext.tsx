@@ -7,7 +7,7 @@ import es from '../locales/es';
 type LanguageContextType = {
   language: 'en' | 'es';
   setLanguage: (lang: 'en' | 'es') => void;
-  t: (key: string) => string;
+  t: (key: string, options?: { returnObjects?: boolean }) => any;
   isTranslatablePage: boolean;
 };
 
@@ -24,7 +24,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   const isTranslatablePage = translatablePages.includes(location.pathname);
 
   // Function to get nested values from translation objects using dot notation
-  const t = (key: string): string => {
+  const t = (key: string, options?: { returnObjects?: boolean }): any => {
     try {
       // Split the key by dots to access nested properties
       const keys = key.split('.');
@@ -41,11 +41,13 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
         }
       }
       
-      // Return the found value if it's a string
-      if (typeof result === 'string') {
+      // Return the found value
+      if (options?.returnObjects) {
+        return result; // Return the object as is
+      } else if (typeof result === 'string') {
         return result;
       } else {
-        console.warn(`Translation for key ${key} is not a string:`, result);
+        console.warn(`Translation for key ${key} is not a string and returnObjects is not set to true:`, result);
         return key;
       }
     } catch (error) {

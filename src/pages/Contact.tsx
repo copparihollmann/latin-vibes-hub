@@ -6,7 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
 const Contact = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,7 +32,7 @@ const Contact = () => {
     setCopied(true);
     
     toast({
-      title: language === 'en' ? 'Email copied to clipboard' : 'Correo copiado al portapapeles',
+      title: t('contact.form.success'),
       duration: 2000,
     });
     
@@ -45,7 +45,7 @@ const Contact = () => {
     // Validate form
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast({
-        title: language === 'en' ? 'Please fill all fields' : 'Por favor completa todos los campos',
+        title: t('contact.form.validation'),
         duration: 3000,
       });
       return;
@@ -62,10 +62,8 @@ const Contact = () => {
       if (error) throw error;
       
       toast({
-        title: language === 'en' ? 'Message sent successfully!' : '¡Mensaje enviado con éxito!',
-        description: language === 'en'
-          ? 'We\'ll get back to you as soon as possible.'
-          : 'Nos pondremos en contacto contigo lo antes posible.',
+        title: t('contact.form.success'),
+        description: t('contact.form.success_description'),
         duration: 5000,
       });
       
@@ -79,10 +77,8 @@ const Contact = () => {
     } catch (error) {
       console.error('Error sending contact form:', error);
       toast({
-        title: language === 'en' ? 'Error sending message' : 'Error al enviar el mensaje',
-        description: language === 'en'
-          ? 'Please try again later or contact us directly via email.'
-          : 'Por favor intenta de nuevo más tarde o contáctanos directamente por correo electrónico.',
+        title: t('contact.form.error'),
+        description: t('contact.form.error_description'),
         duration: 5000,
       });
     } finally {
@@ -97,12 +93,10 @@ const Contact = () => {
         <div className="container-custom">
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 animate-fade-in">
-              {language === 'en' ? 'Contact Us' : 'Contáctanos'}
+              {t('contact.title')}
             </h1>
             <p className="text-xl md:text-2xl animate-fade-in" style={{ animationDelay: '100ms' }}>
-              {language === 'en'
-                ? 'Get in touch with the LATUM team'
-                : 'Ponte en contacto con el equipo de LATUM'}
+              {t('contact.subtitle')}
             </p>
           </div>
         </div>
@@ -116,12 +110,10 @@ const Contact = () => {
             <div className="space-y-10 animate-fade-in">
               <div>
                 <h2 className="text-3xl font-display font-bold mb-6">
-                  {language === 'en' ? 'Let\'s Connect' : 'Conectémonos'}
+                  {t('contact.connect.title')}
                 </h2>
                 <p className="text-lg text-gray-700 mb-8">
-                  {language === 'en'
-                    ? 'Whether you have questions about LATUM, want to collaborate, or are interested in joining our community, we\'d love to hear from you.'
-                    : 'Ya sea que tengas preguntas sobre LATUM, quieras colaborar o estés interesado en unirte a nuestra comunidad, nos encantaría saber de ti.'}
+                  {t('contact.connect.description')}
                 </p>
               </div>
               
@@ -182,14 +174,14 @@ const Contact = () => {
             <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
               <div className="bg-white rounded-xl shadow-md p-8">
                 <h2 className="text-2xl font-display font-bold mb-6">
-                  {language === 'en' ? 'Send Us a Message' : 'Envíanos un Mensaje'}
+                  {t('contact.form.title')}
                 </h2>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                        {language === 'en' ? 'Your Name' : 'Tu Nombre'}
+                        {t('contact.form.name')}
                       </label>
                       <input
                         type="text"
@@ -204,7 +196,7 @@ const Contact = () => {
                     
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                        {language === 'en' ? 'Email Address' : 'Correo Electrónico'}
+                        {t('contact.form.email')}
                       </label>
                       <input
                         type="email"
@@ -220,7 +212,7 @@ const Contact = () => {
                   
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Subject' : 'Asunto'}
+                      {t('contact.form.subject')}
                     </label>
                     <select
                       id="subject"
@@ -231,29 +223,29 @@ const Contact = () => {
                       required
                     >
                       <option value="" disabled>
-                        {language === 'en' ? '-- Select a subject --' : '-- Selecciona un asunto --'}
+                        {t('contact.form.subject_placeholder')}
                       </option>
                       <option value="membership">
-                        {language === 'en' ? 'Membership Inquiry' : 'Consulta de Membresía'}
+                        {t('contact.form.subject_options.membership')}
                       </option>
                       <option value="event">
-                        {language === 'en' ? 'Event Information' : 'Información de Eventos'}
+                        {t('contact.form.subject_options.event')}
                       </option>
                       <option value="partnership">
-                        {language === 'en' ? 'Partnership Opportunity' : 'Oportunidad de Colaboración'}
+                        {t('contact.form.subject_options.partnership')}
                       </option>
                       <option value="volunteer">
-                        {language === 'en' ? 'Volunteer Interest' : 'Interés en Voluntariado'}
+                        {t('contact.form.subject_options.volunteer')}
                       </option>
                       <option value="other">
-                        {language === 'en' ? 'Other' : 'Otro'}
+                        {t('contact.form.subject_options.other')}
                       </option>
                     </select>
                   </div>
                   
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Message' : 'Mensaje'}
+                      {t('contact.form.message')}
                     </label>
                     <textarea
                       id="message"
@@ -274,10 +266,10 @@ const Contact = () => {
                     {isSubmitting ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        {language === 'en' ? 'Sending...' : 'Enviando...'}
+                        {t('contact.form.sending')}
                       </>
                     ) : (
-                      language === 'en' ? 'Send Message' : 'Enviar Mensaje'
+                      t('contact.form.button')
                     )}
                   </button>
                 </form>
@@ -291,12 +283,10 @@ const Contact = () => {
       <section className="py-16 bg-gray-50">
         <div className="container-custom text-center">
           <h2 className="text-3xl font-display font-bold mb-6">
-            {language === 'en' ? 'Find Us On Campus' : 'Encuéntranos en el Campus'}
+            {t('contact.location.title')}
           </h2>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-8">
-            {language === 'en'
-              ? 'While we don\'t have a permanent physical office, we regularly host events and meetings across TUM campuses.'
-              : 'Aunque no tenemos una oficina física permanente, organizamos regularmente eventos y reuniones en los campus de TUM.'}
+            {t('contact.location.description')}
           </p>
           
           <div className="bg-white rounded-xl shadow-md h-64 md:h-96 flex items-center justify-center">
