@@ -89,7 +89,7 @@ const Index = () => {
               </div>
               
               <h2 className="text-4xl md:text-5xl font-display font-bold">
-                Connecting cultures, creating community
+                {t('home.mission.text')}
               </h2>
               
               <p className="text-lg text-gray-700">
@@ -98,7 +98,7 @@ const Index = () => {
               
               <div>
                 <a href="/about" className="btn-primary">
-                  Discover Our Story
+                  {t('home.hero.cta')}
                 </a>
               </div>
             </div>
@@ -129,13 +129,13 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
             <div className="md:w-2/3 space-y-6">
               <div className="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-sm font-medium">
-                Stay Updated
+                {t('home.stayUpdated.title')}
               </div>
               <h2 className="text-3xl md:text-4xl font-display font-bold">
-                Follow Our Instagram for All Events
+                {t('home.stayUpdated.subtitle')}
               </h2>
               <p className="text-xl">
-                Don't miss out on our latest events! We post all our event announcements, updates, and highlights on Instagram - it's the best way to stay connected with everything happening at LATUM.
+                {t('home.stayUpdated.description')}
               </p>
               <a 
                 href="https://www.instagram.com/latum.club/" 
@@ -144,7 +144,7 @@ const Index = () => {
                 className="inline-flex items-center gap-2 bg-white text-latum-blue px-6 py-3 rounded-md font-medium hover:bg-opacity-90 transition-all duration-300"
               >
                 <Instagram size={20} />
-                Follow @latum.club
+                {t('events.stayUpdated.button')}
               </a>
             </div>
             <div className="md:w-1/3 flex justify-center">
@@ -160,39 +160,14 @@ const Index = () => {
       <section className="section-padding bg-gray-50 relative" ref={activitiesRef}>
         <div className="container-custom relative z-10" style={getActivitiesTransform()}>
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-display font-bold mb-6">What We Do</h2>
+            <h2 className="text-4xl font-display font-bold mb-6">{t('home.whatWeDo.title')}</h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              LATUM organizes a wide variety of events and activities to connect Latin American students and culture enthusiasts at TUM.
+              {t('home.whatWeDo.description')}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Speaker Series",
-                description: "Engaging talks from Latin American professionals and academics sharing their expertise and experiences."
-              },
-              {
-                title: "Cultural Events",
-                description: "Celebrations of Latin American traditions, music, dance, and food throughout the year."
-              },
-              {
-                title: "Sports Activities",
-                description: "Regular sports meetups and tournaments to stay active and build connections through friendly competition."
-              },
-              {
-                title: "Latin American Parties",
-                description: "Vibrant club events and parties showcasing the diverse and energetic nightlife of Latin America."
-              },
-              {
-                title: "Book Clubs",
-                description: "Discussions about Latin American literature, from classic novels to contemporary works."
-              },
-              {
-                title: "Mentoring Programs",
-                description: "Support for new students through guidance from experienced peers familiar with both TUM and Latin American backgrounds."
-              }
-            ].map((activity, index) => (
+            {t('home.whatWeDo.activities', { returnObjects: true }).map((activity: any, index: number) => (
               <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                 <h3 className="text-xl font-display font-bold mb-3 text-latum-blue">{activity.title}</h3>
                 <p className="text-gray-700">{activity.description}</p>
@@ -201,7 +176,7 @@ const Index = () => {
           </div>
           
           <div className="mt-12 text-center">
-            <p className="text-xl mb-6">Discover all our activities and stay updated with our events!</p>
+            <p className="text-xl mb-6">{t('events.latest.title')}</p>
             <a 
               href="https://linktr.ee/LA.TUM" 
               target="_blank" 
@@ -220,9 +195,9 @@ const Index = () => {
         <div className="container-custom">
           <div className="bg-latum-accent/10 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1 space-y-4">
-              <h3 className="text-3xl font-display font-bold text-latum-blue">Join Our WhatsApp Community</h3>
+              <h3 className="text-3xl font-display font-bold text-latum-blue">{t('home.whatsapp.title')}</h3>
               <p className="text-lg">
-                Connect with our super active WhatsApp community where members share events, opportunities, and build friendships! The link to join is available on our LinkTree.
+                {t('home.whatsapp.description')}
               </p>
               <a 
                 href="https://linktr.ee/LA.TUM" 
@@ -249,14 +224,14 @@ const Index = () => {
         ></div>
         <div className="container-custom relative z-10" style={getSocialTransform()}>
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-display font-bold mb-8">Follow Our Social Media</h2>
+            <h2 className="text-3xl font-display font-bold mb-8">{t('home.social.title')}</h2>
             <p className="text-xl mb-4">
-              Keep up with our latest events, activities, and announcements by following us on social media.
+              {t('home.social.description')}
             </p>
             <p className="text-latum-blue font-semibold text-lg mb-10">
               <span className="inline-flex items-center">
                 <Instagram size={24} className="mr-2" />
-                Follow us on Instagram for all event announcements and updates!
+                {t('home.social.instagramHighlight')}
               </span>
             </p>
             
@@ -269,8 +244,8 @@ const Index = () => {
               >
                 <Instagram size={36} />
                 <div className="text-left">
-                  <h3 className="text-xl font-bold">Instagram</h3>
-                  <p className="text-gray-600">Follow our events and activities</p>
+                  <h3 className="text-xl font-bold">{t('home.social.instagram.title')}</h3>
+                  <p className="text-gray-600">{t('home.social.instagram.description')}</p>
                 </div>
                 <ExternalLink className="ml-auto" size={20} />
               </a>
@@ -283,8 +258,8 @@ const Index = () => {
               >
                 <Linkedin size={36} />
                 <div className="text-left">
-                  <h3 className="text-xl font-bold">LinkedIn</h3>
-                  <p className="text-gray-600">Connect with our professional network</p>
+                  <h3 className="text-xl font-bold">{t('home.social.linkedin.title')}</h3>
+                  <p className="text-gray-600">{t('home.social.linkedin.description')}</p>
                 </div>
                 <ExternalLink className="ml-auto" size={20} />
               </a>
@@ -299,8 +274,8 @@ const Index = () => {
               >
                 <ExternalLink size={36} />
                 <div className="text-left">
-                  <h3 className="text-xl font-bold">LinkTree</h3>
-                  <p className="text-white/90">All our important links in one place</p>
+                  <h3 className="text-xl font-bold">{t('home.social.linktree.title')}</h3>
+                  <p className="text-white/90">{t('home.social.linktree.description')}</p>
                 </div>
               </a>
             </div>
@@ -320,12 +295,12 @@ const Index = () => {
         ></div>
         <div className="container-custom relative z-10" style={getCommunityTransform()}>
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-display font-bold mb-8">Join Our Community</h2>
+            <h2 className="text-4xl font-display font-bold mb-8">{t('home.community.title')}</h2>
             <p className="text-xl mb-10">
-              LATUM e.V. brings together students from across Latin America and those interested in Latin American culture to create a vibrant, supportive community at TUM.
+              {t('home.community.description')}
             </p>
             <a href="/contact" className="btn-primary bg-white text-latum-blue hover:bg-gray-100">
-              Get Involved
+              {t('home.community.cta')}
             </a>
           </div>
         </div>
@@ -335,4 +310,3 @@ const Index = () => {
 };
 
 export default Index;
-
