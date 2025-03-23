@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { ChevronDown } from 'lucide-react';
@@ -339,6 +340,14 @@ const HeroSection: React.FC = () => {
         animate="visible"
       >
         <div ref={textRef} className="max-w-4xl mx-auto text-center will-change-transform">
+          <motion.div variants={itemVariants} className="flex justify-center mb-6">
+            <img
+              src="/lovable-uploads/39741899-8c2b-417e-8421-5aa51256d8e3.png"
+              alt="LATUM Logo"
+              className="w-48 h-48 object-contain mb-2"
+            />
+          </motion.div>
+          
           <motion.div 
             variants={itemVariants}
             className="inline-block px-4 py-1 mb-4 bg-white/10 backdrop-blur-sm rounded-full"
